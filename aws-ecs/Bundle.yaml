@@ -1,0 +1,9 @@
+apiVersion: iac.planton.cloud/v1
+kind: InfraBundle
+metadata:
+  name: AWS ECS Quick Start
+spec:
+  description: Setup infrastructure to start deploying one or more services to AWS ECS
+  webLinks:
+    bundleWebUrl: enter-github-url
+    readmeRawUrl: enter-readme-github-raw-url
