@@ -78,27 +78,6 @@ metadata:
   org: ${values.org}
   env: ${values.env}
 spec:
-  dns:
-    enabled: true
-    hostname: ${values.load_balancer_domain_name}
-    route53ZoneId:
-      valueFrom:
-        kind: AwsRoute53Zone
-        name: ${values.domain_name}
-        field: outputs.zone_id
-  idleTimeoutSeconds: 60
-  securityGroups:
-    - valueFrom:
-        kind: AwsSecurityGroup
-        name: ${values.env}-http-ingress-and-all-egress
-        field: outputs.security_group_id
-  ssl:
-    enabled: true
-    certificateArn:
-      valueFrom:
-        kind: AwsCertManagerCert
-        name: ${values.env}-alb-cert
-        field: outputs.certificate_arn
   subnets:
     - valueFrom:
         kind: AwsVpc
@@ -108,6 +87,27 @@ spec:
         kind: AwsVpc
         name: ${values.env}-vpc
         field: outputs.public_subnets.[1]
+  securityGroups:
+    - valueFrom:
+        kind: AwsSecurityGroup
+        name: ${values.env}-http-ingress-and-all-egress
+        field: outputs.security_group_id
+  idleTimeoutSeconds: 60
+  dns:
+    enabled: true
+    hostname: ${values.load_balancer_domain_name}
+    route53ZoneId:
+      valueFrom:
+        kind: AwsRoute53Zone
+        name: ${values.domain_name}
+        field: outputs.zone_id
+  ssl:
+    enabled: true
+    certificateArn:
+      valueFrom:
+        kind: AwsCertManagerCert
+        name: ${values.env}-alb-cert
+        field: outputs.certificate_arn
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsEcrRepo
