@@ -2,13 +2,13 @@
 apiVersion: aws.project-planton.org/v1
 kind: AwsVpc
 metadata:
-  name: ${env}-vpc
-  org: ${org}
-  env: ${env}
+  name: ${values.env}-vpc
+  org: ${values.org}
+  env: ${values.env}
 spec:
   availabilityZones:
-    - ${availability_zone_1}
-    - ${availability_zone_2}
+    - ${values.availability_zone_1}
+    - ${values.availability_zone_2}
   subnetSize: 24
   subnetsPerAvailabilityZone: 1
   vpcCidr: 10.0.0.0/16
@@ -19,9 +19,9 @@ spec:
 apiVersion: aws.project-planton.org/v1
 kind: AwsSecurityGroup
 metadata:
-  name: ${env}-http-ingress-and-all-egress
-  org: ${org}
-  env: ${env}
+  name: ${values.env}-http-ingress-and-all-egress
+  org: ${values.org}
+  env: ${values.env}
 spec:
   description: allow ingress on http/s ports and egress on all ports
   egress:
@@ -51,19 +51,19 @@ spec:
 apiVersion: aws.project-planton.org/v1
 kind: AwsRoute53Zone
 metadata:
-  name: ${domain_name}
-  org: ${org}
-  env: ${env}
+  name: ${values.domain_name}
+  org: ${values.org}
+  env: ${values.env}
 spec: { }
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsCertManagerCert
 metadata:
-  name: ${env}-alb-cert
-  org: ${org}
-  env: ${env}
+  name: ${values.env}-alb-cert
+  org: ${values.org}
+  env: ${values.env}
 spec:
-  primaryDomainName: ${load_balancer_domain_name}
+  primaryDomainName: ${values.load_balancer_domain_name}
   route53HostedZoneId: Z0533571BA1UDDSKVCHJ
   validationMethod: DNS
 ---
@@ -71,57 +71,57 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsAlb
 metadata:
   name: ecs-services-alb
-  org: ${org}
-  env: ${env}
+  org: ${values.org}
+  env: ${values.env}
 spec:
   dns:
     enabled: true
-    hostname: ${load_balancer_domain_name}
+    hostname: ${values.load_balancer_domain_name}
     route53ZoneId:
       valueFrom:
         kind: AwsRoute53Zone
-        name: ${domain_name}
+        name: ${values.domain_name}
         field: outputs.zoneId
   idleTimeoutSeconds: 60
   securityGroups:
     - valueFrom:
         kind: AwsSecurityGroup
-        name: ${env}-http-ingress-and-all-egress
+        name: ${values.env}-http-ingress-and-all-egress
         field: outputs.securityGroupId
   ssl:
     enabled: true
     certificateArn:
       valueFrom:
         kind: AwsCertManagerCert
-        name: ${env}-alb-cert
+        name: ${values.env}-alb-cert
         field: outputs.certificateArn
   subnets:
     - valueFrom:
         kind: AwsVpc
-        name: ${env}-vpc
+        name: ${values.env}-vpc
         field: outputs.public_subnets.[0]
     - valueFrom:
         kind: AwsVpc
-        name: ${env}-vpc
+        name: ${values.env}-vpc
         field: outputs.public_subnets.[1]
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsEcrRepo
 metadata:
   name: ecr-repo
-  org: ${org}
-  env: ${env}
+  org: ${values.org}
+  env: ${values.env}
 spec:
   encryptionType: AES256
   imageImmutable: true
-  repositoryName: ${service_image_repo_name}
+  repositoryName: ${values.service_image_repo_name}
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsEcsCluster
 metadata:
   name: ecs-cluster
-  org: ${org}
-  env: ${env}
+  org: ${values.org}
+  env: ${values.env}
 spec:
   capacityProviders:
     - FARGATE
@@ -131,8 +131,8 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsIamRole
 metadata:
   name: ecs-task-execution-role
-  org: ${org}
-  env: ${env}
+  org: ${values.org}
+  env: ${values.env}
 spec:
   description: IAM role for ECS tasks to pull images and write logs
   managedPolicyArns:
