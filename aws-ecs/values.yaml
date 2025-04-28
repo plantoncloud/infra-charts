@@ -21,3 +21,6 @@ load_balancer_domain_name: ""
 
 # Repository name in ECR for ECS service images (e.g., my-service-repo)
 service_image_repo_name: ""
+
+# Port on which the service will run (e.g., 8080)
+service_port: "8080"

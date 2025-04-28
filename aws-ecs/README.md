@@ -56,6 +56,7 @@ The following values must be provided or will default as specified in [values.ya
 | `domain_name`               | Custom domain name managed by Route 53               | example.com     | Required         |
 | `load_balancer_domain_name` | Domain associated with the Application Load Balancer | app.example.com | Required         |
 | `service_image_repo_name`   | Repository name in ECR for ECS service images        | my-service-repo | Required         |
+| `service_port`              | Port on which the service will run                   | 8080            | `8080`           |
 
 ---
 

@@ -24,11 +24,11 @@ metadata:
   env: ${values.env}
 spec:
   description: allow ingress on http/s ports and egress on all ports
-  egress:
-    - description: allow all
-      ipv4Cidrs:
-        - 0.0.0.0/0
-      protocol: "-1"
+  vpcId:
+    valueFrom:
+      kind: AwsVpc
+      name: vpc
+      field: outputs.vpc_id
   ingress:
     - description: http from anywhere planton
       fromPort: 80
@@ -36,17 +36,17 @@ spec:
         - 0.0.0.0/0
       protocol: TCP
       toPort: 443
-    - description: Allow on 8080
-      fromPort: 8080
+    - description: Allow on ${values.service_port}
+      fromPort: ${values.service_port}
       ipv4Cidrs:
         - 0.0.0.0/0
       protocol: TCP
-      toPort: 8080
-  vpcId:
-    valueFrom:
-      kind: AwsVpc
-      name: vpc
-      field: outputs.vpc_id
+      toPort: ${values.service_port}
+  egress:
+    - description: allow all
+      ipv4Cidrs:
+        - 0.0.0.0/0
+      protocol: "-1"
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsRoute53Zone
