@@ -1,0 +1,151 @@
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsVpc
+metadata:
+  name: ${env}-vpc
+spec:
+  availabilityZones:
+    - ${availability_zone_1}
+    - ${availability_zone_2}
+  subnetSize: 24
+  subnetsPerAvailabilityZone: 1
+  vpcCidr: 10.0.0.0/16
+  isDnsHostnamesEnabled: true
+  isDnsSupportEnabled: true
+  isNatGatewayEnabled: true
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsSecurityGroup
+metadata:
+  name: ${env}-http-ingress-and-all-egress
+spec:
+  description: allow ingress on http/s ports and egress on all ports
+  egress:
+    - description: allow all
+      ipv4Cidrs:
+        - 0.0.0.0/0
+      protocol: "-1"
+  ingress:
+    - description: http from anywhere planton
+      fromPort: 80
+      ipv4Cidrs:
+        - 0.0.0.0/0
+      protocol: TCP
+      toPort: 443
+    - description: Allow on 8080
+      fromPort: 8080
+      ipv4Cidrs:
+        - 0.0.0.0/0
+      protocol: TCP
+      toPort: 8080
+  vpcId:
+    valueFrom:
+      kind: AwsVpc
+      name: vpc
+      field: outputs.vpcId
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsRoute53Zone
+metadata:
+  name: ${domain_name}
+spec: { }
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsCertManagerCert
+metadata:
+  name: ${env}-alb-cert
+spec:
+  primaryDomainName: ${load_balancer_domain_name}
+  route53HostedZoneId: Z0533571BA1UDDSKVCHJ
+  validationMethod: DNS
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsAlb
+metadata:
+  name: ecs-services-alb
+spec:
+  dns:
+    enabled: true
+    hostname: ${load_balancer_domain_name}
+    route53ZoneId:
+      valueFrom:
+        kind: AwsRoute53Zone
+        name: ${domain_name}
+        field: outputs.zoneId
+  idleTimeoutSeconds: 60
+  securityGroups:
+    - valueFrom:
+        kind: AwsSecurityGroup
+        name: ${env}-http-ingress-and-all-egress
+        field: outputs.securityGroupId
+  ssl:
+    enabled: true
+    certificateArn:
+      valueFrom:
+        kind: AwsCertManagerCert
+        name: ${env}-alb-cert
+        field: outputs.certificateArn
+  subnets:
+    - valueFrom:
+        kind: AwsVpc
+        name: ${env}-vpc
+        field: outputs.public_subnets.[0]
+    - valueFrom:
+        kind: AwsVpc
+        name: ${env}-vpc
+        field: outputs.public_subnets.[1]
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsEcrRepo
+metadata:
+  name: ecr-repo
+spec:
+  encryptionType: AES256
+  imageImmutable: true
+  repositoryName: ${service_image_repo_name}
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsEcsCluster
+metadata:
+  name: ecs-cluster
+spec:
+  capacityProviders:
+    - FARGATE
+    - FARGATE_SPOT
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsIamRole
+metadata:
+  name: ecs-task-execution-role
+spec:
+  description: IAM role for ECS tasks to pull images and write logs
+  managedPolicyArns:
+    - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+  path: /service-role/
+  trustPolicy:
+    Statement:
+      - Action: sts:AssumeRole
+        Effect: Allow
+        Principal:
+          Service: ecs-tasks.amazonaws.com
+    Version: "2012-10-17"
+  inlinePolicies:
+    extraLoggingPermissions:
+      Statement:
+        - Action:
+            - logs:CreateLogGroup
+          Effect: Allow
+          Resource: '*'
+          Sid: CreateCloudWatchGroups
+      Version: "2012-10-17"
+    s3ReadPermissions:
+      Statement:
+        - Action:
+            - s3:ListBucket
+          Effect: Allow
+          Resource: arn:aws:s3:::*
+        - Action:
+            - s3:GetObject
+          Effect: Allow
+          Resource: arn:aws:s3:::*/*
+      Version: "2012-10-17"
