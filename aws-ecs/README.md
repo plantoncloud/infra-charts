@@ -1,10 +1,12 @@
 # AWS ECS Quick Start Bundle
 
-## Overview
-
 The AWS ECS Quick Start Bundle provides a streamlined way to rapidly provision all necessary cloud resources to deploy
 your ECS-based service on AWS. This bundle specifically focuses on creating infrastructure components essential for
 deploying and managing ECS services, ensuring ease of use and quick onboarding for development teams.
+
+The resources defined by this bundle are available in the [bundle.yaml](bundle.yaml). Configuration parameters are
+managed
+through [values.yaml](values.yaml).
 
 ---
 
@@ -42,6 +44,22 @@ This ECS Quick Start Bundle creates the following AWS resources:
 
 ---
 
+## Bundle Input Values
+
+The following values must be provided or will default as specified in [values.yaml](values.yaml):
+
+| Input Parameter             | Description                                          | Example         | Required/Default |
+|-----------------------------|------------------------------------------------------|-----------------|------------------|
+| `org`                       | Organization ID on PlantonCloud                      | acmecorp        | Required         |
+| `env`                       | Name of your target deployment environment           | dev, staging    | Required         |
+| `availability_zone_1`       | AWS Availability Zone for the first subnet           | us-east-1a      | `us-east-1a`     |
+| `availability_zone_2`       | AWS Availability Zone for the second subnet          | us-east-1b      | `us-east-1b`     |
+| `domain_name`               | Custom domain name managed by Route 53               | example.com     | Required         |
+| `load_balancer_domain_name` | Domain associated with the Application Load Balancer | app.example.com | Required         |
+| `service_image_repo_name`   | Repository name in ECR for ECS service images        | my-service-repo | Required         |
+
+---
+
 ## Bundle Customization
 
 Resources created by this ECS Quick Start Bundle can be customized post-deployment to fit specific requirements.
@@ -58,3 +76,4 @@ Individual configurations may be modified directly in your AWS account or throug
 ---
 
 © 2025 Planton Cloud. All rights reserved.
+

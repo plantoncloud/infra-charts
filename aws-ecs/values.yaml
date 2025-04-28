@@ -1,0 +1,23 @@
+# AWS ECS Quick Start Bundle - Input Values
+# Provide values for the following parameters when deploying this bundle
+
+# Organization ID on PlantonCloud (e.g., acmecorp)
+org: ""
+
+# Name of your target deployment environment (e.g., dev, staging)
+env: ""
+
+# AWS Availability Zone for the first subnet (e.g., us-east-1a)
+availability_zone_1: "us-east-1a"
+
+# AWS Availability Zone for the second subnet (e.g., us-east-1b)
+availability_zone_2: "us-east-1b"
+
+# Custom domain name managed by Route 53 (e.g., example.com)
+domain_name: ""
+
+# Domain associated with the Application Load Balancer (e.g., app.example.com)
+load_balancer_domain_name: ""
+
+# Repository name in ECR for ECS service images (e.g., my-service-repo)
+service_image_repo_name: ""
