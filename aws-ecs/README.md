@@ -4,9 +4,8 @@ The AWS ECS Quick Start Bundle provides a streamlined way to rapidly provision a
 your ECS-based service on AWS. This bundle specifically focuses on creating infrastructure components essential for
 deploying and managing ECS services, ensuring ease of use and quick onboarding for development teams.
 
-The resources defined by this bundle are available in the [bundle.yaml](bundle.yaml). Configuration parameters are
-managed
-through [values.yaml](values.yaml).
+The resources defined by this bundle are available in the [template.yaml](template.yaml). Configuration parameters are
+managed through [values.yaml](values.yaml).
 
 ---
 
