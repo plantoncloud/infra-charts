@@ -46,7 +46,7 @@ spec:
     valueFrom:
       kind: AwsVpc
       name: vpc
-      field: outputs.vpcId
+      field: outputs.vpc_id
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsRoute53Zone
@@ -64,7 +64,11 @@ metadata:
   env: ${values.env}
 spec:
   primaryDomainName: ${values.load_balancer_domain_name}
-  route53HostedZoneId: Z0533571BA1UDDSKVCHJ
+  route53HostedZoneId:
+    valueFrom:
+      kind: AwsRoute53Zone
+      name: ${values.domain_name}
+      field: outputs.zone_id
   validationMethod: DNS
 ---
 apiVersion: aws.project-planton.org/v1
@@ -81,20 +85,20 @@ spec:
       valueFrom:
         kind: AwsRoute53Zone
         name: ${values.domain_name}
-        field: outputs.zoneId
+        field: outputs.zone_id
   idleTimeoutSeconds: 60
   securityGroups:
     - valueFrom:
         kind: AwsSecurityGroup
         name: ${values.env}-http-ingress-and-all-egress
-        field: outputs.securityGroupId
+        field: outputs.security_group_id
   ssl:
     enabled: true
     certificateArn:
       valueFrom:
         kind: AwsCertManagerCert
         name: ${values.env}-alb-cert
-        field: outputs.certificateArn
+        field: outputs.certificate_arn
   subnets:
     - valueFrom:
         kind: AwsVpc
