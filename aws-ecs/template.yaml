@@ -27,8 +27,8 @@ spec:
   vpcId:
     valueFrom:
       kind: AwsVpc
-      name: vpc
-      field: outputs.vpc_id
+      name: ${values.env}-vpc
+      fieldPath: status.outputs.vpcId
   ingress:
     - description: http from anywhere planton
       fromPort: 80
@@ -68,13 +68,13 @@ spec:
     valueFrom:
       kind: AwsRoute53Zone
       name: ${values.domain_name}
-      field: outputs.zone_id
+      fieldPath: status.outputs.zoneId
   validationMethod: DNS
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsAlb
 metadata:
-  name: ecs-services-alb
+  name: ${values.env}-ecs-services-alb
   org: ${values.org}
   env: ${values.env}
 spec:
@@ -82,32 +82,33 @@ spec:
     - valueFrom:
         kind: AwsVpc
         name: ${values.env}-vpc
-        field: outputs.public_subnets.[0]
+        fieldPath: status.outputs.publicSubnets.[0].id
     - valueFrom:
         kind: AwsVpc
         name: ${values.env}-vpc
-        field: outputs.public_subnets.[1]
+        fieldPath: status.outputs.publicSubnets.[1].id
   securityGroups:
     - valueFrom:
         kind: AwsSecurityGroup
         name: ${values.env}-http-ingress-and-all-egress
-        field: outputs.security_group_id
+        fieldPath: status.outputs.securityGroupId
   idleTimeoutSeconds: 60
   dns:
     enabled: true
-    hostname: ${values.load_balancer_domain_name}
+    hostnames:
+    - ${values.load_balancer_domain_name}
     route53ZoneId:
       valueFrom:
         kind: AwsRoute53Zone
         name: ${values.domain_name}
-        field: outputs.zone_id
+        fieldPath: status.outputs.zoneId
   ssl:
     enabled: true
     certificateArn:
       valueFrom:
         kind: AwsCertManagerCert
         name: ${values.env}-alb-cert
-        field: outputs.certificate_arn
+        fieldPath: status.outputs.certArn
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsEcrRepo
@@ -134,7 +135,7 @@ spec:
 apiVersion: aws.project-planton.org/v1
 kind: AwsIamRole
 metadata:
-  name: ecs-task-execution-role
+  name: ${values.env}-ecs-task-execution-role
   org: ${values.org}
   env: ${values.env}
 spec:
