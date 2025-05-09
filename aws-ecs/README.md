@@ -1,17 +1,17 @@
-# AWS ECS Quick Start Bundle
+# AWS ECS Quick Start InfraChart
 
-The AWS ECS Quick Start Bundle provides a streamlined way to rapidly provision all necessary cloud resources to deploy
-your ECS-based service on AWS. This bundle specifically focuses on creating infrastructure components essential for
+The AWS ECS Quick Start InfraChart provides a streamlined way to rapidly provision all necessary cloud resources to deploy
+your ECS-based service on AWS. This chart specifically focuses on creating infrastructure components essential for
 deploying and managing ECS services, ensuring ease of use and quick onboarding for development teams.
 
-The resources defined by this bundle are available in the [template.yaml](template.yaml). Configuration parameters are
+The resources defined by this chart are available in the [template.yaml](template.yaml). Configuration parameters are
 managed through [values.yaml](values.yaml).
 
 ---
 
 ## Included Cloud Resources
 
-This ECS Quick Start Bundle creates the following AWS resources:
+This ECS Quick Start Chart creates the following AWS resources:
 
 1. **AWS VPC**:
     - Public subnets across two availability zones
@@ -43,7 +43,7 @@ This ECS Quick Start Bundle creates the following AWS resources:
 
 ---
 
-## Bundle Input Values
+## Chart Input Values
 
 The following values must be provided or will default as specified in [values.yaml](values.yaml):
 
@@ -60,16 +60,16 @@ The following values must be provided or will default as specified in [values.ya
 
 ---
 
-## Bundle Customization
+## Chart Customization
 
-Resources created by this ECS Quick Start Bundle can be customized post-deployment to fit specific requirements.
+Resources created by this ECS Quick Start Chart can be customized post-deployment to fit specific requirements.
 Individual configurations may be modified directly in your AWS account or through Planton Cloud.
 
 ---
 
 ## Important Notes
 
-- The ECS Quick Start Bundle is intended for initial provisioning only. Subsequent changes or management of resources
+- The ECS Quick Start Chart is intended for initial provisioning only. Subsequent changes or management of resources
   must be handled individually.
 - Verify DNS configurations within Route 53 to ensure seamless ALB and SSL certificate operations.
 

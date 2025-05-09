@@ -1,5 +1,5 @@
 apiVersion: iac.planton.cloud/v1
-kind: InfraBundleTemplate
+kind: InfraChart
 metadata:
   name: AWS ECS Quick Start
 spec:
