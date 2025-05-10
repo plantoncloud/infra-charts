@@ -5,5 +5,5 @@ metadata:
 spec:
   description: Setup infrastructure to start deploying one or more services to AWS ECS
   webLinks:
-    bundleWebUrl: enter-github-url
+    chartWebUrl: enter-github-url
     readmeRawUrl: enter-readme-github-raw-url
