@@ -1,26 +1,31 @@
-# AWS ECS Quick Start Bundle - Input Values
-# Provide values for the following parameters when deploying this bundle
+- name: org
+  description: Organization ID on PlantonCloud (e.g., acmecorp)
+  value: acmecorp
 
-# Organization ID on PlantonCloud (e.g., acmecorp)
-org: acmecorp
+- name: env
+  description: Name of your target deployment environment (e.g., dev, staging)
+  value: dev
 
-# Name of your target deployment environment (e.g., dev, staging)
-env: dev
+- name: availability_zone_1
+  description: AWS Availability Zone for the first subnet (e.g., us-east-1a)
+  value: us-east-1a
 
-# AWS Availability Zone for the first subnet (e.g., us-east-1a)
-availability_zone_1: us-east-1a
+- name: availability_zone_2
+  description: AWS Availability Zone for the second subnet (e.g., us-east-1b)
+  value: us-east-1b
 
-# AWS Availability Zone for the second subnet (e.g., us-east-1b)
-availability_zone_2: us-east-1b
+- name: domain_name
+  description: Custom domain name managed by Route 53 (e.g., example.com)
+  value: example.com
 
-# Custom domain name managed by Route 53 (e.g., example.com)
-domain_name: example.com
+- name: load_balancer_domain_name
+  description: Domain associated with the Application Load Balancer (e.g., app.example.com)
+  value: app.example.com
 
-# Domain associated with the Application Load Balancer (e.g., app.example.com)
-load_balancer_domain_name: "app.example.com"
+- name: service_image_repo_name
+  description: Repository name in ECR for ECS service images (e.g., my-service-repo)
+  value: shopping-cart-service
 
-# Repository name in ECR for ECS service images (e.g., my-service-repo)
-service_image_repo_name: shopping-cart-service
-
-# Port on which the service will run (e.g., 8080)
-service_port: 8080
+- name: service_port
+  description: Port on which the service will run (e.g., 8080)
+  value: "8080"
