@@ -7,6 +7,7 @@ spec:
     kind: platform
   description: Setup infrastructure to start deploying one or more services to AWS ECS
   iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/code2cloud/aws/awsecscluster/v1/assets/logo.svg
+  isReady: true
   webLinks:
     chartWebUrl: https://github.com/plantoncloud/quick-start-infra-charts/tree/main/aws-ecs
     readmeRawUrl: https://raw.githubusercontent.com/plantoncloud/quick-start-infra-charts/refs/heads/main/aws-ecs/README.md
