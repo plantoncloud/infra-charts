@@ -98,7 +98,8 @@ spec:
   dns:
     enabled: true
     hostnames:
-    - ${values.load_balancer_domain_name}
+      - ${values.load_balancer_domain_name}
+      - "*.${values.load_balancer_domain_name}"
     route53ZoneId:
       valueFrom:
         kind: AwsRoute53Zone
