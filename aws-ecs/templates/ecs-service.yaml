@@ -45,6 +45,6 @@ spec:
           fieldPath: status.outputs.securityGroupId
     subnets:
       - valueFrom:
-        kind: AwsVpc
-        name: ${values.env}-vpc
-        fieldPath: status.outputs.privateSubnets.[0].id
+          kind: AwsVpc
+          name: ${values.env}-vpc
+          fieldPath: status.outputs.privateSubnets.[0].id
