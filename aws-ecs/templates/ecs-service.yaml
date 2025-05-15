@@ -12,7 +12,7 @@ spec:
         name: ${values.env}-ecs-services-alb
         fieldPath: status.outputs.loadBalancerArn
     enabled: true
-    hostname: ${service_name}.${values.load_balancer_domain_name}
+    hostname: ${values.service_name}.${values.load_balancer_domain_name}
     routingType: hostname
     listenerPort: 443
   clusterArn:
