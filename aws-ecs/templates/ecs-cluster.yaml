@@ -1,7 +1,7 @@
 apiVersion: aws.project-planton.org/v1
 kind: AwsEcsCluster
 metadata:
-  name: ecs-cluster
+  name: ${values.env}-ecs-cluster
   org: ${values.org}
   env: ${values.env}
 spec:

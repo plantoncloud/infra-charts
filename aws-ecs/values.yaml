@@ -22,6 +22,10 @@
   description: Domain associated with the Application Load Balancer (e.g., app.example.com)
   value: app.example.com
 
+- name: service_name
+  description: Name of the service
+  value: nginx
+
 - name: service_image_repo_name
   description: Repository name in ECR for ECS service images (e.g., my-service-repo)
   value: shopping-cart-service

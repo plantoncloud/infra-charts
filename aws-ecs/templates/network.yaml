@@ -64,6 +64,8 @@ metadata:
   env: ${values.env}
 spec:
   primaryDomainName: ${values.load_balancer_domain_name}
+  alternateDomainNames:
+    - "*.${values.load_balancer_domain_name}"
   route53HostedZoneId:
     valueFrom:
       kind: AwsRoute53Zone
