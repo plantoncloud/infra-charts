@@ -3,8 +3,6 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsEcrRepo
 metadata:
   name: ecr-repo
-  org: ${values.org}
-  env: ${values.env}
 spec:
   encryptionType: AES256
   imageImmutable: true

@@ -3,8 +3,6 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsVpc
 metadata:
   name: ${values.env}-vpc
-  org: ${values.org}
-  env: ${values.env}
 spec:
   availabilityZones:
     - ${values.availability_zone_1}
@@ -20,8 +18,6 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsSecurityGroup
 metadata:
   name: ${values.env}-http-ingress-and-all-egress
-  org: ${values.org}
-  env: ${values.env}
 spec:
   description: allow ingress on http/s ports and egress on all ports
   vpcId:
@@ -52,16 +48,12 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsRoute53Zone
 metadata:
   name: ${values.domain_name}
-  org: ${values.org}
-  env: ${values.env}
 spec: { }
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsCertManagerCert
 metadata:
   name: ${values.env}-alb-cert
-  org: ${values.org}
-  env: ${values.env}
 spec:
   primaryDomainName: ${values.load_balancer_domain_name}
   alternateDomainNames:
@@ -77,8 +69,6 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsAlb
 metadata:
   name: ${values.env}-ecs-services-alb
-  org: ${values.org}
-  env: ${values.env}
 spec:
   subnets:
     - valueFrom:

@@ -2,8 +2,6 @@
 apiVersion: aws.project-planton.org/v1
 kind: AwsEcsService
 metadata:
-  org: ${values.org}
-  env: ${values.env}
   name: ${values.service_name}
 spec:
   alb:

@@ -1,11 +1,3 @@
-- name: org
-  description: Organization ID on PlantonCloud (e.g., acmecorp)
-  value: acmecorp
-
-- name: env
-  description: Name of your target deployment environment (e.g., dev, staging)
-  value: dev
-
 - name: availability_zone_1
   description: AWS Availability Zone for the first subnet (e.g., us-east-1a)
   value: us-east-1a
