@@ -1,0 +1,27 @@
+- name: availability_zone_1
+  description: AWS Availability Zone for the first subnet (e.g., us-east-1a)
+  value: us-east-1a
+
+- name: availability_zone_2
+  description: AWS Availability Zone for the second subnet (e.g., us-east-1b)
+  value: us-east-1b
+
+- name: domain_name
+  description: Custom domain name managed by Route 53 (e.g., example.com)
+  value: example.com
+
+- name: load_balancer_domain_name
+  description: Domain associated with the Application Load Balancer (e.g., app.example.com)
+  value: app.example.com
+
+- name: service_name
+  description: Name of the service
+  value: nginx
+
+- name: service_image_repo_name
+  description: Repository name in ECR for ECS service images (e.g., my-service-repo)
+  value: shopping-cart-service
+
+- name: service_port
+  description: Port on which the service will run (e.g., 8080)
+  value: "8080"
