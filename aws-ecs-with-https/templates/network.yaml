@@ -31,7 +31,7 @@ spec:
       ipv4Cidrs:
         - 0.0.0.0/0
       protocol: TCP
-      toPort: 80
+      toPort: 443
     - description: Allow on ${values.service_port}
       fromPort: ${values.service_port}
       ipv4Cidrs:
@@ -49,6 +49,21 @@ kind: AwsRoute53Zone
 metadata:
   name: ${values.domain_name}
 spec: { }
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsCertManagerCert
+metadata:
+  name: ${values.env}-alb-cert
+spec:
+  primaryDomainName: ${values.load_balancer_domain_name}
+  alternateDomainNames:
+    - "*.${values.load_balancer_domain_name}"
+  route53HostedZoneId:
+    valueFrom:
+      kind: AwsRoute53Zone
+      name: ${values.domain_name}
+      fieldPath: status.outputs.zoneId
+  validationMethod: DNS
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsAlb
@@ -80,3 +95,10 @@ spec:
         kind: AwsRoute53Zone
         name: ${values.domain_name}
         fieldPath: status.outputs.zoneId
+  ssl:
+    enabled: true
+    certificateArn:
+      valueFrom:
+        kind: AwsCertManagerCert
+        name: ${values.env}-alb-cert
+        fieldPath: status.outputs.certArn

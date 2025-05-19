@@ -1,0 +1,13 @@
+apiVersion: service-hub.planton.cloud/v1
+kind: InfraChart
+metadata:
+  name: AWS ECS Quick Start w/ HTTPS
+spec:
+  selector:
+    kind: platform
+  description: Setup infrastructure to start deploying one or more services to AWS ECS w/ HTTPS
+  iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/code2cloud/aws/awsecscluster/v1/assets/logo.svg
+  isReady: true
+  webLinks:
+    chartWebUrl: https://github.com/plantoncloud/infra-charts/tree/main/aws-ecs-with-https
+    readmeRawUrl: https://raw.githubusercontent.com/plantoncloud/infra-charts/refs/heads/main/aws-ecs-with-https/README.md
