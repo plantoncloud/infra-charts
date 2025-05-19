@@ -1,0 +1,7 @@
+- name: gcp_project_id
+  description: GCP Project ID (e.g., planton-cloud-testing)
+  value: planton-cloud-testing
+
+- name: gcp_region
+  description: GCP region (e.g., us-central1)
+  value: us-central1
