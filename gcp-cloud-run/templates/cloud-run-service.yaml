@@ -12,7 +12,7 @@ spec:
     image:
       repo: nginx
       tag: latest
-    port: 80
+    port: ${values.service_port} # port on which the service will run
     cpu: 1                       # Cloud Run allows 1 / 2 / 4 only; 1 ≈ 256 CPU units
     memory: 512                  # MiB, same as ECS
     replicas:
@@ -33,5 +33,5 @@ spec:
   dns:
     enabled: false
     hostnames:
-      - nginx-cloud-run.testing.project-planton.org
-    managedZone: project-planton-org-zone
+      - ${values.service_name}.${values.domain_name}
+    managedZone: project-planton-org-zone //will come from value from
