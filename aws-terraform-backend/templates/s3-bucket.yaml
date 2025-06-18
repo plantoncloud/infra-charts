@@ -1,6 +1,6 @@
 ---
 apiVersion: aws.project-planton.org/v1
-kind: S3Bucket
+kind: AwsS3Bucket
 metadata:
   name: ${values.s3-bucket-name}
 spec:
