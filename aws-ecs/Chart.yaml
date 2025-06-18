@@ -1,4 +1,4 @@
-apiVersion: service-hub.planton.cloud/v1
+apiVersion: multi-cloud.planton.cloud/v1
 kind: InfraChart
 metadata:
   name: AWS ECS Quick Start

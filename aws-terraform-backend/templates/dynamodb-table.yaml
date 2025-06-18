@@ -1,0 +1,11 @@
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsDynamodb
+metadata:
+  name: ${values.dynamodb-table-name}
+spec:
+  billingMode: PROVISIONED
+  hashKey:
+    name: LockID
+    type: S
+  tableName: ${values.dynamodb-table-name}
