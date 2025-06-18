@@ -1,10 +1,11 @@
 # AWS ECS Quick Start InfraChart
 
-The AWS ECS Quick Start InfraChart provides a streamlined way to rapidly provision all necessary cloud resources to deploy
+The AWS ECS Quick Start InfraChart provides a streamlined way to rapidly provision all necessary cloud resources to
+deploy
 your ECS-based service on AWS. This chart specifically focuses on creating infrastructure components essential for
 deploying and managing ECS services, ensuring ease of use and quick onboarding for development teams.
 
-The resources defined by this chart are available in the [template.yaml](template.yaml). Configuration parameters are
+The resources defined by this chart are available in the [templates](templates) folder. Configuration parameters are
 managed through [values.yaml](values.yaml).
 
 ---
