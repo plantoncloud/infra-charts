@@ -6,7 +6,7 @@ spec:
   selector:
     kind: platform
   description: Baseline private GKE cluster with custom VPC, Cloud NAT, Cloud DNS and an autoscaled node‑pool.
-  iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/code2cloud/gcp/gke/v1/assets/logo.svg
+  iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/infrahub/cloudresource/provider/gcp/gcpgkeclustercore/v1/assets/logo.svg
   isReady: true
   webLinks:
     chartWebUrl: https://github.com/plantoncloud/infra-charts/tree/main/gcp-gke-baseline

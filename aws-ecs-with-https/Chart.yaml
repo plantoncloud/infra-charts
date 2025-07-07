@@ -6,7 +6,7 @@ spec:
   selector:
     kind: platform
   description: Setup infrastructure to start deploying one or more services to AWS ECS w/ HTTPS
-  iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/code2cloud/aws/awsecscluster/v1/assets/logo.svg
+  iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/infrahub/cloudresource/provider/aws/awsecscluster/v1/assets/logo.svg
   isReady: true
   webLinks:
     chartWebUrl: https://github.com/plantoncloud/infra-charts/tree/main/aws-ecs-with-https
