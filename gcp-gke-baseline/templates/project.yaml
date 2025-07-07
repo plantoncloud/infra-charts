@@ -1,0 +1,15 @@
+---
+apiVersion: gcp.project-planton.org/v1
+kind: GcpProject
+metadata:
+  name: ${values.project_id}
+spec:
+  parent_type: ${values.parent_type}
+  parent_id: "${values.parent_id}"
+  billing_account_id: "${values.billing_account_id}"
+  disable_default_network: true
+  enabled_apis:
+    - compute.googleapis.com
+    - container.googleapis.com
+    - dns.googleapis.com
+    - iam.googleapis.com

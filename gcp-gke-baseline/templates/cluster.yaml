@@ -1,0 +1,31 @@
+---
+apiVersion: gcp.project-planton.org/v1
+kind: GcpGkeClusterCore
+metadata:
+  name: ${values.cluster_name}
+spec:
+  project_id:
+    valueFrom:
+      kind: GcpProject
+      name: ${values.project_id}
+      fieldPath: status.outputs.project_id
+  location: ${values.cluster_location}
+  subnetwork_self_link:
+    valueFrom:
+      kind: GcpSubnetwork
+      name: ${values.env}-${values.subnet_name}
+      fieldPath: status.outputs.subnetwork_self_link
+  cluster_secondary_range_name:
+    value: ${values.pods_secondary_range_name}
+  services_secondary_range_name:
+    value: ${values.services_secondary_range_name}
+  master_ipv4_cidr_block: ${values.master_ipv4_cidr}
+  enable_public_nodes: ${values.enable_public_nodes}
+  release_channel: ${values.release_channel}
+  disable_network_policy: ${values.disable_network_policy}
+  disable_workload_identity: ${values.disable_workload_identity}
+  router_nat_name:
+    valueFrom:
+      kind: GcpRouterNat
+      name: ${values.router_nat_name}
+      fieldPath: metadata.name

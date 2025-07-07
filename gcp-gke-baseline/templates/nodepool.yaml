@@ -1,0 +1,26 @@
+---
+apiVersion: gcp.project-planton.org/v1
+kind: GcpGkeNodePool
+metadata:
+  name: ${values.node_pool_name}
+spec:
+  cluster_project_id:
+    valueFrom:
+      kind: GcpProject
+      name: ${values.project_id}
+      fieldPath: status.outputs.project_id
+  cluster_name:
+    valueFrom:
+      kind: GcpGkeClusterCore
+      name: ${values.cluster_name}
+      fieldPath: metadata.name
+  machine_type: ${values.nodepool_machine_type}
+  disk_size_gb: ${values.nodepool_disk_size_gb}
+  disk_type: ${values.nodepool_disk_type}
+  image_type: ${values.nodepool_image_type}
+  spot: ${values.nodepool_spot}
+  node_labels:
+    pool: ${values.node_pool_name}
+  autoscaling:
+    min_nodes: ${values.nodepool_min_nodes}
+    max_nodes: ${values.nodepool_max_nodes}
