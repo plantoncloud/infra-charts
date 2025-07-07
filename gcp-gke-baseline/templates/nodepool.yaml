@@ -5,10 +5,7 @@ metadata:
   name: ${values.node_pool_name}
 spec:
   cluster_project_id:
-    valueFrom:
-      kind: GcpProject
-      name: ${values.project_id}
-      fieldPath: status.outputs.project_id
+    value: ${values.project_id}
   cluster_name:
     valueFrom:
       kind: GcpGkeClusterCore
