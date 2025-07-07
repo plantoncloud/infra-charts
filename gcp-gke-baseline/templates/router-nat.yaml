@@ -1,0 +1,12 @@
+---
+apiVersion: gcp.project-planton.org/v1
+kind: GcpRouterNat
+metadata:
+  name: ${values.router_nat_name}
+spec:
+  vpc_self_link:
+    valueFrom:
+      kind: GcpVpc
+      name: ${values.env}-${values.vpc_name}
+      fieldPath: status.outputs.network_self_link
+  region: ${values.region}
