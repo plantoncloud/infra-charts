@@ -4,34 +4,32 @@ kind: GcpCloudRun
 metadata:
   name: nginx
 spec:
-  projectId: ${values.gcp_project_id}
-  region: ${values.gcp_region}
+  projectId: "{{ values.gcp_project_id }}"
+  region: "{{ values.gcp_region }}"
 
   # ——— container runtime ———
   container:
     image:
       repo: nginx
       tag: latest
-    port: ${values.service_port} # port on which the service will run
-    cpu: 1                       # Cloud Run allows 1 / 2 / 4 only; 1 ≈ 256 CPU units
-    memory: 512                  # MiB, same as ECS
+    port: {{ values.service_port }}          # numeric
+    cpu: 1
+    memory: 512
     replicas:
-      min: 0                     # keep warm instances (0 → scale-to-zero allowed)
-      max: 1                     # match ECS “replicas: 1”
+      min: 0
+      max: 1
     env:
       variables:
-        DB_HOST: abce            # plain env
-        #secrets:
-        #DB_PASSWORD: projects/<gcp-project-id>/secrets/dev-database:latest
-        # ↑ maps $secrets-group entry to Secret Manager reference
+        DB_HOST: abce
+        # see README for secrets example
 
   # ——— traffic / scaling ———
-  maxConcurrency: 80             # default; adjust if needed
-  allowUnauthenticated: true     # mimics public ALB listener
+  maxConcurrency: 80
+  allowUnauthenticated: true
 
   # ——— optional custom domain ———
   dns:
     enabled: false
     hostnames:
-      - ${values.service_name}.${values.domain_name}
-    managedZone: project-planton-org-zone //will come from value from
+      - "{{ values.service_name }}.{{ values.domain_name }}"
+    managedZone: project-planton-org-zone  # will come from valueFrom

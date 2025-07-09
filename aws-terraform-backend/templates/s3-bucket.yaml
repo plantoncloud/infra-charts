@@ -2,6 +2,6 @@
 apiVersion: aws.project-planton.org/v1
 kind: AwsS3Bucket
 metadata:
-  name: ${values.bucket_name}
+  name: "{{ values.bucket_name }}"
 spec:
   awsRegion: us-east-1

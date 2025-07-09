@@ -2,30 +2,30 @@
 apiVersion: gcp.project-planton.org/v1
 kind: GcpGkeClusterCore
 metadata:
-  name: ${values.cluster_name}
+  name: "{{ values.cluster_name }}"
 spec:
   projectId:
     valueFrom:
       kind: GcpProject
-      name: ${values.project_id}
+      name: "{{ values.project_id }}"
       fieldPath: status.outputs.project_id
-  location: ${values.cluster_location}
+  location: "{{ values.cluster_location }}"
   subnetworkSelfLink:
     valueFrom:
       kind: GcpSubnetwork
-      name: ${values.env}-${values.subnet_name}
+      name: "{{ values.env }}-{{ values.subnet_name }}"
       fieldPath: status.outputs.subnetwork_self_link
   clusterSecondaryRangeName:
-    value: ${values.pods_secondary_range_name}
+    value: "{{ values.pods_secondary_range_name }}"
   servicesSecondaryRangeName:
-    value: ${values.services_secondary_range_name}
-  masterIpv4CidrBlock: ${values.master_ipv4_cidr}
-  enablePublicNodes: ${values.enable_public_nodes}
-  releaseChannel: ${values.release_channel}
-  disableNetworkPolicy: ${values.disable_network_policy}
-  disableWorkloadIdentity: ${values.disable_workload_identity}
+    value: "{{ values.services_secondary_range_name }}"
+  masterIpv4CidrBlock: "{{ values.master_ipv4_cidr }}"
+  enablePublicNodes: {{ values.enable_public_nodes }}
+  releaseChannel: "{{ values.release_channel }}"
+  disableNetworkPolicy: {{ values.disable_network_policy }}
+  disableWorkloadIdentity: {{ values.disable_workload_identity }}
   routerNatName:
     valueFrom:
       kind: GcpRouterNat
-      name: ${values.router_nat_name}
+      name: "{{ values.router_nat_name }}"
       fieldPath: metadata.name

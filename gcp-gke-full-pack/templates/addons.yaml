@@ -7,7 +7,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: ElasticOperatorKubernetes
@@ -17,7 +17,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: ExternalDnsKubernetes
@@ -27,7 +27,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: ExternalSecretsKubernetes
@@ -37,7 +37,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: IngressNginxKubernetes
@@ -47,7 +47,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: IstioKubernetes
@@ -57,7 +57,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: KafkaOperatorKubernetes
@@ -67,7 +67,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: PostgresOperatorKubernetes
@@ -77,7 +77,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
+      clusterName: "{{ values.cluster_name }}"
 ---
 apiVersion: kubernetes.project-planton.org/v1
 kind: SolrOperatorKubernetes
@@ -87,5 +87,4 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: GcpGkeClusterCore
-      clusterName: ${values.cluster_name}
-
+      clusterName: "{{ values.cluster_name }}"

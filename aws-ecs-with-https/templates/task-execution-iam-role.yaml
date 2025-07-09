@@ -2,7 +2,7 @@
 apiVersion: aws.project-planton.org/v1
 kind: AwsIamRole
 metadata:
-  name: ${values.env}-ecs-task-execution-role
+  name: "{{ values.env }}-ecs-task-execution-role"
 spec:
   description: IAM role for ECS tasks to pull images and write logs
   managedPolicyArns:
