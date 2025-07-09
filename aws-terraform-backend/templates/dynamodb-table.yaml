@@ -2,10 +2,10 @@
 apiVersion: aws.project-planton.org/v1
 kind: AwsDynamodb
 metadata:
-  name: ${values.table_name}
+  name: "{{ values.table_name }}"
 spec:
   billingMode: PROVISIONED
   hashKey:
     name: LockID
     type: S
-  tableName: ${values.table_name}
+  tableName: "{{ values.table_name }}"

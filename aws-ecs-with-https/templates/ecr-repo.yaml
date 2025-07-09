@@ -6,4 +6,4 @@ metadata:
 spec:
   encryptionType: AES256
   imageImmutable: true
-  repositoryName: ${values.service_image_repo_name}
+  repositoryName: "{{ values.service_image_repo_name }}"
