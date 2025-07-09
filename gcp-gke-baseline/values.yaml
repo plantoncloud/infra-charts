@@ -1,4 +1,8 @@
 # ─── GCP project & billing ─────────────────────────────────────────────────────
+- name: create_project                # NEW
+  description: "true → create a brand‑new GCP project; false → use existing project_id"
+  value: "false"
+
 - name: project_id
   description: GCP project ID (created or reused)
   value: my-gke-demo-123

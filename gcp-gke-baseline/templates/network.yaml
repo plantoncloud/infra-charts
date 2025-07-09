@@ -5,10 +5,14 @@ metadata:
   name: "{{ values.env }}-{{ values.vpc_name }}"
 spec:
   projectId:
+  {% if values.create_project | bool %}
     valueFrom:
       kind: GcpProject
       name: "{{ values.project_id }}"
       fieldPath: status.outputs.project_id
+  {% else %}
+    value: "{{ values.project_id }}"
+  {% endif %}
   autoCreateSubnetworks: {{ values.vpc_auto_create_subnetworks }}
   routingMode: REGIONAL
 ---
