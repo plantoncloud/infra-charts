@@ -1,3 +1,4 @@
+params:
 - name: availability_zone_1
   description: AWS Availability Zone for the first subnet (e.g., us-east-1a)
   value: us-east-1a
