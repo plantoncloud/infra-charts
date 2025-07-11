@@ -1,6 +1,6 @@
-# GCP GKE Cluster Full Pack InfraChart
+# GKE Environment
 
-The **GCP GKE Cluster Full Pack** InfraChart provisions a complete, production‑ready Kubernetes environment on Google
+The **GKE Environment** InfraChart provisions a complete, production‑ready Kubernetes environment on Google
 Cloud Platform.  
 It now supports **conditional resource generation via Jinja templates**—for example, you can choose whether to create a
 brand‑new GCP project and which Kubernetes add‑ons to install.
