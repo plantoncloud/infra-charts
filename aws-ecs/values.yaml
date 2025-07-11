@@ -1,28 +1,41 @@
 params:
-- name: availability_zone_1
-  description: AWS Availability Zone for the first subnet (e.g., us-east-1a)
-  value: us-east-1a
+  # ─── Network ───────────────────────────────────────────────────────────────────
+  - name: availability_zone_1
+    description: First AZ for the public / private subnet pair
+    value: us-east-1a
 
-- name: availability_zone_2
-  description: AWS Availability Zone for the second subnet (e.g., us-east-1b)
-  value: us-east-1b
+  - name: availability_zone_2
+    description: Second AZ for the public / private subnet pair
+    value: us-east-1b
 
-- name: domain_name
-  description: Custom domain name managed by Route 53 (e.g., example.com)
-  value: example.com
+  - name: domain_name
+    description: Route 53 Hosted‑Zone domain
+    value: example.com
 
-- name: load_balancer_domain_name
-  description: Domain associated with the Application Load Balancer (e.g., app.example.com)
-  value: app.example.com
+  - name: load_balancer_domain_name
+    description: DNS name served by the ALB
+    value: app.example.com
 
-- name: service_name
-  description: Name of the service
-  value: nginx
+  # ─── Service basics ────────────────────────────────────────────────────────────
+  - name: service_name
+    description: ECS service & task family name
+    value: nginx
 
-- name: service_image_repo_name
-  description: Repository name in ECR for ECS service images (e.g., my-service-repo)
-  value: shopping-cart-service
+  - name: service_image_repo_name
+    description: ECR repository for your service images
+    value: shopping-cart-service
 
-- name: service_port
-  description: Port on which the service will run (e.g., 8080)
-  value: "8080"
+  - name: service_port
+    description: Container port the task listens on
+    value: "8080"
+
+  # ─── HTTPS toggle ──────────────────────────────────────────────────────────────
+  - name: httpsEnabled                 # NEW
+    description: "true → create ACM cert and terminate TLS on the ALB"
+    type: bool
+    value: true
+
+  # ─── Misc – tweak if required ─────────────────────────────────────────────────
+  - name: alb_idle_timeout_seconds
+    description: ALB idle timeout
+    value: "60"

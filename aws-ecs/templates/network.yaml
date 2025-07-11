@@ -26,8 +26,14 @@ spec:
       name: "{{ values.env }}-vpc"
       fieldPath: status.outputs.vpcId
   ingress:
-    - description: http from anywhere planton
+    - description: http from anywhere
       fromPort: 80
+      ipv4Cidrs:
+        - 0.0.0.0/0
+      protocol: TCP
+      toPort: 80
+    - description: https from anywhere
+      fromPort: 443
       ipv4Cidrs:
         - 0.0.0.0/0
       protocol: TCP
@@ -48,7 +54,24 @@ apiVersion: aws.project-planton.org/v1
 kind: AwsRoute53Zone
 metadata:
   name: "{{ values.domain_name }}"
-spec: { }
+spec: {}
+  {% if values.httpsEnabled | bool %}
+---
+apiVersion: aws.project-planton.org/v1
+kind: AwsCertManagerCert
+metadata:
+  name: "{{ values.env }}-alb-cert"
+spec:
+  primaryDomainName: "{{ values.load_balancer_domain_name }}"
+  alternateDomainNames:
+    - "*.{{ values.load_balancer_domain_name }}"
+  route53HostedZoneId:
+    valueFrom:
+      kind: AwsRoute53Zone
+      name: "{{ values.domain_name }}"
+      fieldPath: status.outputs.zoneId
+  validationMethod: DNS
+  {% endif %}
 ---
 apiVersion: aws.project-planton.org/v1
 kind: AwsAlb
@@ -69,7 +92,7 @@ spec:
         kind: AwsSecurityGroup
         name: "{{ values.env }}-http-ingress-and-all-egress"
         fieldPath: status.outputs.securityGroupId
-  idleTimeoutSeconds: 60
+  idleTimeoutSeconds: {{ values.alb_idle_timeout_seconds }}
   dns:
     enabled: true
     hostnames:
@@ -80,3 +103,12 @@ spec:
         kind: AwsRoute53Zone
         name: "{{ values.domain_name }}"
         fieldPath: status.outputs.zoneId
+  {% if values.httpsEnabled | bool %}
+  ssl:
+    enabled: true
+    certificateArn:
+      valueFrom:
+        kind: AwsCertManagerCert
+        name: "{{ values.env }}-alb-cert"
+        fieldPath: status.outputs.certArn
+  {% endif %}

@@ -1,80 +1,79 @@
-# AWS ECS Quick Start InfraChart
+# AWS ECS Environment
 
-The AWS ECS Quick Start InfraChart provides a streamlined way to rapidly provision all necessary cloud resources to
-deploy
-your ECS-based service on AWS. This chart specifically focuses on creating infrastructure components essential for
-deploying and managing ECS services, ensuring ease of use and quick onboarding for development teams.
+The **AWS ECS Environment** InfraChart provisions all cloud resources required to run a containerised service on Amazon
+ECS—optionally terminating TLS directly on an Application Load Balancer (ALB).
+Like the GKE chart, it now leverages **Jinja‑based conditionals**, so you can turn HTTPS support on or off with a single
+flag.
 
-The resources defined by this chart are available in the [templates](templates) folder. Configuration parameters are
-managed through [values.yaml](values.yaml).
+Chart manifests live in the [`templates`](templates) directory; every tunable value is documented in [
+`values.yaml`](values.yaml).
 
 ---
 
-## Included Cloud Resources
+## Included Cloud Resources (conditional)
 
-This ECS Quick Start Chart creates the following AWS resources:
+| Resource                                         | Always created | Controlled by boolean flag |
+|--------------------------------------------------|----------------|----------------------------|
+| **Custom VPC** (+ public & private subnets, NAT) | Yes            | —                          |
+| **Security Group**                               | Yes            | —                          |
+| **Route 53 Hosted Zone**                         | Yes            | —                          |
+| **Elastic Container Registry (ECR) Repo**        | Yes            | —                          |
+| **ECS Cluster (Fargate + Spot)**                 | Yes            | —                          |
+| **Application Load Balancer (ALB)**              | Yes            | —                          |
+| **ACM Certificate (DNS‑validated)**              | *No*           | `httpsEnabled`             |
+| **ECS Service (+ Task Def)**                     | Yes            | —                          |
+| **IAM Task‑Execution Role**                      | Yes            | —                          |
 
-1. **AWS VPC**:
-    - Public subnets across two availability zones
-    - DNS hostname and DNS support enabled
-    - NAT Gateway enabled for internet access from private subnets
+### How the `httpsEnabled` flag works
 
-2. **AWS Security Group**:
-    - Ingress allowed for HTTP (80), HTTPS (443), and custom port (8080)
-    - Egress allowed for all outbound traffic
+* `httpsEnabled: true` →
 
-3. **AWS Route 53 Hosted Zone**:
-    - DNS management for specified custom domain
+    * Renders an **`AwsCertManagerCert`** resource.
+    * Adds an `ssl:` block (certificate ARN) to the ALB spec.
+    * Configures the ECS service listener to **443**.
+* `httpsEnabled: false` →
 
-4. **AWS Certificate Manager (ACM) Certificate**:
-    - DNS validated SSL certificate for secure ALB communication
-
-5. **AWS Application Load Balancer (ALB)**:
-    - Configured with SSL termination and integrated with Route 53 DNS
-    - Associated with specified security groups and public subnets
-
-6. **AWS Elastic Container Registry (ECR)**:
-    - Container image repository secured with AES256 encryption
-
-7. **AWS ECS Cluster**:
-    - Configured for use with AWS Fargate and Fargate Spot
-
-8. **AWS IAM Role (Task Execution Role)**:
-    - Grants ECS tasks permissions to interact with ECR and CloudWatch
+    * Omits the certificate and `ssl:` configuration.
+    * Sets the listener to plain **80**.
 
 ---
 
 ## Chart Input Values
 
-The following values must be provided or will default as specified in [values.yaml](values.yaml):
+Booleans are shown as **unquoted YAML booleans** (`true` /`false`) to avoid string/boolean casting issues.
 
-| Input Parameter             | Description                                          | Example         | Required/Default |
-|-----------------------------|------------------------------------------------------|-----------------|------------------|
-| `org`                       | Organization ID on PlantonCloud                      | acmecorp        | Required         |
-| `env`                       | Name of your target deployment environment           | dev, staging    | Required         |
-| `availability_zone_1`       | AWS Availability Zone for the first subnet           | us-east-1a      | `us-east-1a`     |
-| `availability_zone_2`       | AWS Availability Zone for the second subnet          | us-east-1b      | `us-east-1b`     |
-| `domain_name`               | Custom domain name managed by Route 53               | example.com     | Required         |
-| `load_balancer_domain_name` | Domain associated with the Application Load Balancer | app.example.com | Required         |
-| `service_image_repo_name`   | Repository name in ECR for ECS service images        | my-service-repo | Required         |
-| `service_port`              | Port on which the service will run                   | 8080            | `8080`           |
+| Parameter                        | Description                        | Example / Options       | Required / Default   |
+|----------------------------------|------------------------------------|-------------------------|----------------------|
+| **availability\_zone\_1**        | First AZ for the subnet pair       | `us‑east‑1a`            | Default `us‑east‑1a` |
+| **availability\_zone\_2**        | Second AZ for the subnet pair      | `us‑east‑1b`            | Default `us‑east‑1b` |
+| **domain\_name**                 | Route 53 zone domain               | `example.com`           | Required             |
+| **load\_balancer\_domain\_name** | DNS name served by the ALB         | `app.example.com`       | Required             |
+| **service\_name**                | ECS service / task family name     | `nginx`                 | Default `nginx`      |
+| **service\_image\_repo\_name**   | ECR repository for images          | `shopping-cart-service` | Required             |
+| **service\_port**                | Container port exposed by the task | `8080`                  | Default `8080`       |
+| **httpsEnabled**                 | Create ACM cert & terminate TLS    | `true` / `false`        | **Default:** `true`  |
+| **alb\_idle\_timeout\_seconds**  | ALB idle timeout                   | `60`                    | Default `60`         |
+
+> **Tip:**Flip `httpsEnabled` to `false` for quick internal environments where plain HTTP is sufficient.
 
 ---
 
-## Chart Customization
+## Customisation & Management
 
-Resources created by this ECS Quick Start Chart can be customized post-deployment to fit specific requirements.
-Individual configurations may be modified directly in your AWS account or through Planton Cloud.
+* Toggle `httpsEnabled` per environment (dev vs prod) in a higher‑priority`values.yaml`.
+* Change `service_port` to expose a different container port; the security group rule automatically follows.
+* All cross‑resource references are wired with `valueFrom`; you rarely need to touch the templates.
 
 ---
 
 ## Important Notes
 
-- The ECS Quick Start Chart is intended for initial provisioning only. Subsequent changes or management of resources
-  must be handled individually.
-- Verify DNS configurations within Route 53 to ensure seamless ALB and SSL certificate operations.
+* Ensure your **Route 53** zone (`domain_name`) already exists, or delegate the domain before applying the chart.
+* When `httpsEnabled: true`, ACM issues a *DNS‑validated* certificate—Route 53 records must be publicly resolvable
+  during validation.
+* The chart creates a **public** ALB. If you need an internal ALB, you can extend the template with a `publicAlbEnabled`
+  flag following the same pattern.
 
 ---
 
 © 2025 Planton Cloud. All rights reserved.
-

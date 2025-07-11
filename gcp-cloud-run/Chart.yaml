@@ -1,11 +1,11 @@
 apiVersion: infra-hub.planton.cloud/v1
 kind: InfraChart
 metadata:
-  name: GCP Cloud Run Quick Start
+  name: GCP CloudRun Service
 spec:
   selector:
     kind: platform
-  description: Setup infrastructure to start deploying one or more services to GCP Cloud Run
+  description: Deploy infrastructure required for a service to GCP Cloud Run
   iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/infrahub/cloudresource/provider/gcp/gcpcloudrun/v1/assets/logo.svg
   isReady: true
   webLinks:

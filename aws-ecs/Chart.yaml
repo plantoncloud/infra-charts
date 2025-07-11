@@ -1,11 +1,11 @@
 apiVersion: infra-hub.planton.cloud/v1
 kind: InfraChart
 metadata:
-  name: AWS ECS Quick Start
+  name: AWS ECS Environment
 spec:
   selector:
     kind: platform
-  description: Setup infrastructure to start deploying one or more services to AWS ECS
+  description: Configurable AWS ECS environment with optional HTTPS termination on an ALB.
   iconUrl: https://storage.googleapis.com/planton-cloud-static-assets/logos/api-resources/infrahub/cloudresource/provider/aws/awsecscluster/v1/assets/logo.svg
   isReady: true
   webLinks:

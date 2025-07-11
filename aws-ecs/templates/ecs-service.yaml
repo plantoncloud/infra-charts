@@ -13,7 +13,7 @@ spec:
     enabled: true
     hostname: "{{ values.service_name }}.{{ values.load_balancer_domain_name }}"
     routingType: hostname
-    listenerPort: 443
+    listenerPort: {{ 443 if values.httpsEnabled | bool else 80 }}
   clusterArn:
     valueFrom:
       kind: AwsEcsCluster
