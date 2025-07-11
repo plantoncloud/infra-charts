@@ -136,3 +136,49 @@ params:
   - name: dns_domain_name
     description: FQDN the zone manages (must end with a dot)
     value: demo.example.com.
+
+  # ─── Kubernetes Cluster Addons ────────────────────────────────────────────────────────────────
+  - name: certManagerEnabled
+    description: Install Cert‑Manager add‑on
+    type: bool
+    value: true
+
+  - name: elasticOperatorEnabled
+    description: Install Elastic Operator add‑on
+    type: bool
+    value: true
+
+  - name: externalDnsEnabled
+    description: Install External‑DNS add‑on
+    type: bool
+    value: true
+
+  - name: externalSecretsEnabled
+    description: Install External‑Secrets add‑on
+    type: bool
+    value: true
+
+  - name: ingressNginxEnabled
+    description: Install Ingress‑NGINX add‑on
+    type: bool
+    value: true
+
+  - name: istioEnabled
+    description: Install Istio (Ingress) add‑on
+    type: bool
+    value: true
+
+  - name: kafkaOperatorEnabled
+    description: Install Kafka Operator add‑on
+    type: bool
+    value: true
+
+  - name: postgresOperatorEnabled
+    description: Install PostgreSQL Operator add‑on
+    type: bool
+    value: true
+
+  - name: solrOperatorEnabled
+    description: Install Solr Operator add‑on
+    type: bool
+    value: true
