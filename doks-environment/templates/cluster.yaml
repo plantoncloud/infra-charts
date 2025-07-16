@@ -1,0 +1,20 @@
+---
+apiVersion: digital-ocean.project-planton.org/v1
+kind: DigitalOceanKubernetesCluster
+metadata:
+  name: "{{ values.cluster_name }}"
+spec:
+  clusterName: "{{ values.cluster_name }}"
+  region: "{{ values.region }}"
+  kubernetesVersion: "{{ values.kubernetes_version }}"
+  vpc:
+    valueFrom:
+      kind: DigitalOceanVpc
+      name: "{{ values.env }}-vpc"
+      fieldPath: metadata.name
+  highlyAvailable: {{ values.highly_available }}
+  autoUpgrade: {{ values.auto_upgrade }}
+  disableSurgeUpgrade: {{ values.disable_surge_upgrade }}
+  tags:
+    - "{{ values.env }}"
+    - "{{ values.cluster_name }}"

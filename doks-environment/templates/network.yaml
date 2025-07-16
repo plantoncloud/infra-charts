@@ -1,0 +1,10 @@
+---
+apiVersion: digital-ocean.project-planton.org/v1
+kind: DigitalOceanVpc
+metadata:
+  name: "{{ values.env }}-vpc"
+spec:
+  description: "{{ values.env }} VPC"
+  region: "{{ values.region }}"
+  ipRangeCidr: "{{ values.vpc_cidr }}"
+  isDefaultForRegion: {{ values.is_default_for_region }}
