@@ -14,7 +14,7 @@ flexibility.
 
 Currently available Quick Start InfraCharts:
 
-- [AWS ECS Quick Start Chart](aws-ecs/README.md): Provides streamlined provisioning for AWS ECS services.
+- [AWS ECS Quick Start Chart](ecs-environment/README.md): Provides streamlined provisioning for AWS ECS services.
 
 Additional charts for other cloud providers and services will be added over time.
 
