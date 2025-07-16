@@ -13,4 +13,4 @@ spec:
   isReady: true
   webLinks:
     chartWebUrl: https://github.com/plantoncloud/infra-charts/tree/main/azure-aks
-    readmeRawUrl: https://raw.githubusercontent.com/plantoncloud/infra-charts/refs/heads/main/azure-aks/README.md
+    readmeRawUrl: https://raw.githubusercontent.com/plantoncloud/infra-charts/refs/heads/main/aks-environment/README.md
