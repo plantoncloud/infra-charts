@@ -1,0 +1,117 @@
+params:
+  # ─── Network ──────────────────────────────────────────────────────────────
+  - name: region
+    description: DigitalOcean region slug (e.g. nyc3)
+    value: new_york
+
+  - name: vpc_cidr
+    description: VPC CIDR (must be /16, /20 or /24)
+    value: 10.10.0.0/16
+
+  - name: is_default_for_region
+    description: true → make this the region’s default VPC
+    type: bool
+    value: false
+
+  # ─── DOKS cluster core ────────────────────────────────────────────────────
+  - name: cluster_name
+    description: Kubernetes cluster name
+    value: doks-demo
+
+  - name: kubernetes_version
+    description: Kubernetes semver supported by DO
+    value: "1.29.3"
+
+  - name: highly_available
+    description: true → HA control‑plane
+    type: bool
+    value: false
+
+  - name: auto_upgrade
+    description: Automatically apply patch upgrades
+    type: bool
+    value: true
+
+  - name: disable_surge_upgrade
+    description: Disable surge nodes during upgrade
+    type: bool
+    value: false
+
+  # ─── Node‑pool ────────────────────────────────────────────────────────────
+  - name: node_pool_name
+    description: Node‑pool name
+    value: default-pool
+
+  - name: node_size_slug
+    description: Droplet size slug (e.g. s-2vcpu-4gb)
+    value: s-2vcpu-4gb
+
+  - name: node_count
+    description: Static node count when autoscaling off
+    value: "3"
+
+  - name: node_auto_scale
+    description: Enable autoscaling
+    type: bool
+    value: true
+
+  - name: node_min_nodes
+    description: Autoscaler minimum
+    value: "2"
+
+  - name: node_max_nodes
+    description: Autoscaler maximum
+    value: "6"
+
+  # ─── DNS zone (optional) ──────────────────────────────────────────────────
+  - name: create_dns_zone
+    description: true → create DigitalOcean DNS zone
+    type: bool
+    value: false
+
+  - name: domain_name
+    description: Apex domain (e.g. example.com)
+    value: example.com
+
+  # ─── Container Registry (optional) ────────────────────────────────────────
+  - name: create_container_registry
+    description: true → create DigitalOcean Container Registry
+    type: bool
+    value: false
+
+  - name: registry_name
+    description: Registry name (unique, 1‑63 chars)
+    value: myregistry
+
+  - name: registry_tier
+    description: STARTER | BASIC | PROFESSIONAL
+    value: STARTER
+
+  # ─── Kubernetes add‑ons ───────────────────────────────────────────────────
+  - name: certManagerEnabled
+    type: bool
+    value: true
+  - name: elasticOperatorEnabled
+    type: bool
+    value: true
+  - name: externalDnsEnabled
+    type: bool
+    value: true
+  - name: externalSecretsEnabled
+    type: bool
+    value: true
+  - name: ingressNginxEnabled
+    type: bool
+    value: true
+  - name: istioEnabled
+    type: bool
+    value: true
+  - name: kafkaOperatorEnabled
+    type: bool
+    value: true
+  - name: postgresOperatorEnabled
+    type: bool
+    value: true
+  - name: solrOperatorEnabled
+    type: bool
+    value: true
