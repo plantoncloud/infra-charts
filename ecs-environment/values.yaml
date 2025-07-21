@@ -27,7 +27,7 @@ params:
 
   - name: service_port
     description: Container port the task listens on
-    value: "8080"
+    value: "80"
 
   # ─── HTTPS toggle ──────────────────────────────────────────────────────────────
   - name: httpsEnabled                 # NEW
