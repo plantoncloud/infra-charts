@@ -2,9 +2,9 @@
 apiVersion: digital-ocean.project-planton.org/v1
 kind: DigitalOceanVpc
 metadata:
-  name: "{{ values.env }}-vpc"
+  name: {{ values.env }}-{{ values.cluster_name }}-vpc
 spec:
-  description: "{{ values.env }} VPC"
+  description: "VPC for {{ values.cluster_name }} Kubernetes Cluster in {{ values.env }} environment"
   region: "{{ values.region }}"
   ipRangeCidr: "{{ values.vpc_cidr }}"
   isDefaultForRegion: false
