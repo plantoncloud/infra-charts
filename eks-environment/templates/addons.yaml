@@ -3,7 +3,7 @@
 apiVersion: kubernetes.project-planton.org/v1
 kind: CertManagerKubernetes
 metadata:
-  name: cert-manager
+  name: {{ values.cluster_name }}-cert-manager
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -16,7 +16,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: ElasticOperatorKubernetes
 metadata:
-  name: elastic-operator
+  name: {{ values.cluster_name }}-elastic-operator
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -29,7 +29,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: ExternalDnsKubernetes
 metadata:
-  name: external-dns
+  name: {{ values.cluster_name }}-external-dns
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -42,7 +42,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: ExternalSecretsKubernetes
 metadata:
-  name: external-secrets
+  name: {{ values.cluster_name }}-external-secrets
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -55,7 +55,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: IngressNginxKubernetes
 metadata:
-  name: ingress-nginx
+  name: {{ values.cluster_name }}-ingress-nginx
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -68,7 +68,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: IstioKubernetes
 metadata:
-  name: istio-ingress
+  name: {{ values.cluster_name }}-istio-ingress
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -81,7 +81,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: KafkaOperatorKubernetes
 metadata:
-  name: kafka-operator
+  name: {{ values.cluster_name }}-kafka-operator
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -94,7 +94,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: PostgresOperatorKubernetes
 metadata:
-  name: postgres-operator
+  name: {{ values.cluster_name }}-postgres-operator
 spec:
   targetCluster:
     kubernetesClusterSelector:
@@ -107,7 +107,7 @@ spec:
 apiVersion: kubernetes.project-planton.org/v1
 kind: SolrOperatorKubernetes
 metadata:
-  name: solr-operator
+  name: {{ values.cluster_name }}-solr-operator
 spec:
   targetCluster:
     kubernetesClusterSelector:
