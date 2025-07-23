@@ -6,6 +6,6 @@ metadata:
   name: "{{ values.registry_name }}"
 spec:
   name: "{{ values.registry_name }}"
-  subscriptionTier: "{{ values.registry_tier }}"
+  subscriptionTier: STARTER
   region: "{{ values.region }}"
   {% endif %}

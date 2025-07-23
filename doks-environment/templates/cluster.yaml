@@ -13,8 +13,16 @@ spec:
       name: "{{ values.env }}-vpc"
       fieldPath: metadata.name
   highlyAvailable: {{ values.highly_available }}
-  autoUpgrade: {{ values.auto_upgrade }}
-  disableSurgeUpgrade: {{ values.disable_surge_upgrade }}
+  autoUpgrade: false
+  disableSurgeUpgrade: false
   tags:
     - "{{ values.env }}"
     - "{{ values.cluster_name }}"
+  defaultNodePool:
+    size: "{{ values.node_size }}"
+    nodeCount: {{ values.node_count }}
+    autoScale: {{ values.node_auto_scale }}
+    {% if values.node_auto_scale | bool %}
+    minNodes: {{ values.min_nodes }}
+    maxNodes: {{ values.max_nodes }}
+    {% endif %}

@@ -1,117 +1,105 @@
 params:
   # ─── Network ──────────────────────────────────────────────────────────────
   - name: region
-    description: DigitalOcean region slug (e.g. nyc3)
-    value: new_york
+    description: DigitalOcean Region (e.g. nyc3)
+    value: blr1
 
   - name: vpc_cidr
     description: VPC CIDR (must be /16, /20 or /24)
     value: 10.10.0.0/16
 
-  - name: is_default_for_region
-    description: true → make this the region’s default VPC
-    type: bool
-    value: false
-
   # ─── DOKS cluster core ────────────────────────────────────────────────────
   - name: cluster_name
-    description: Kubernetes cluster name
+    description: Kubernetes Cluster Name
     value: doks-demo
 
   - name: kubernetes_version
-    description: Kubernetes semver supported by DO
-    value: "1.29.3"
+    description: Kubernetes Version
+    value: "1.32.1"
 
   - name: highly_available
-    description: true → HA control‑plane
+    description: Highly Available Cluster
     type: bool
     value: false
 
-  - name: auto_upgrade
-    description: Automatically apply patch upgrades
-    type: bool
-    value: true
-
-  - name: disable_surge_upgrade
-    description: Disable surge nodes during upgrade
-    type: bool
-    value: false
-
-  # ─── Node‑pool ────────────────────────────────────────────────────────────
-  - name: node_pool_name
-    description: Node‑pool name
-    value: default-pool
-
-  - name: node_size_slug
-    description: Droplet size slug (e.g. s-2vcpu-4gb)
+  - name: node_size
+    description: Node Size (e.g. s-2vcpu-4gb)
     value: s-2vcpu-4gb
 
-  - name: node_count
-    description: Static node count when autoscaling off
-    value: "3"
-
   - name: node_auto_scale
-    description: Enable autoscaling
+    description: Enable Node Autoscaling
     type: bool
     value: true
 
-  - name: node_min_nodes
-    description: Autoscaler minimum
-    value: "2"
+  - name: node_count
+    description: Node Count (When Autoscaling is Off)
+    type: number
+    value: 3
 
-  - name: node_max_nodes
-    description: Autoscaler maximum
-    value: "6"
+  - name: min_nodes
+    description: Autoscaler Minimum Nodes
+    type: number
+    value: 2
 
-  # ─── DNS zone (optional) ──────────────────────────────────────────────────
-  - name: create_dns_zone
-    description: true → create DigitalOcean DNS zone
-    type: bool
-    value: false
+  - name: max_nodes
+    description: Autoscaler Maximum Nodes
+    type: number
+    value: 6
 
+  # ─── DNS ──────────────────────────────────────────────────
   - name: domain_name
-    description: Apex domain (e.g. example.com)
-    value: example.com
+    description: Domain (e.g. example.com)
+    value: planton-cloud.app
+
+  - name: create_dns_zone
+    description: Create DNS zone
+    type: bool
+    value: true
 
   # ─── Container Registry (optional) ────────────────────────────────────────
   - name: create_container_registry
-    description: true → create DigitalOcean Container Registry
+    description: Create Container Registry
     type: bool
-    value: false
+    value: true
 
   - name: registry_name
-    description: Registry name (unique, 1‑63 chars)
-    value: myregistry
-
-  - name: registry_tier
-    description: STARTER | BASIC | PROFESSIONAL
-    value: STARTER
+    description: Container Registry Name
+    value: my-registry
 
   # ─── Kubernetes add‑ons ───────────────────────────────────────────────────
   - name: certManagerEnabled
+    description: Install Cert-Manager
     type: bool
     value: true
   - name: elasticOperatorEnabled
+    description: Install Elastic Operator
     type: bool
     value: true
   - name: externalDnsEnabled
+    description: Install External DNS
     type: bool
     value: true
   - name: externalSecretsEnabled
+    description: Install External Secrets
     type: bool
     value: true
   - name: ingressNginxEnabled
+    description: Install Ingress Nginx
     type: bool
     value: true
   - name: istioEnabled
+    description: Install Istio
     type: bool
     value: true
   - name: kafkaOperatorEnabled
+    description: Install Kafka Operator
     type: bool
     value: true
   - name: postgresOperatorEnabled
+    description: Install Postgres Operator
     type: bool
     value: true
   - name: solrOperatorEnabled
+    description: Install Solr Operator
     type: bool
     value: true
