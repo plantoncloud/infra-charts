@@ -15,7 +15,7 @@ params:
 
   - name: kubernetes_version
     description: Kubernetes Version
-    value: "1.32.1"
+    value: "1.33.1"
 
   - name: highly_available
     description: Highly Available Cluster
