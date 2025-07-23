@@ -11,7 +11,7 @@ spec:
     valueFrom:
       kind: DigitalOceanVpc
       name: "{{ values.env }}-vpc"
-      fieldPath: metadata.name
+      fieldPath: status.outputs.vpcId
   highlyAvailable: {{ values.highly_available }}
   autoUpgrade: false
   disableSurgeUpgrade: false
