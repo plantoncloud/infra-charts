@@ -10,7 +10,7 @@ spec:
   vpc:
     valueFrom:
       kind: DigitalOceanVpc
-      name: "{{ values.env }}-vpc"
+      name: "{{ values.env }}-{{ values.cluster_name }}-vpc"
       fieldPath: status.outputs.vpcId
   highlyAvailable: {{ values.highly_available }}
   autoUpgrade: false
