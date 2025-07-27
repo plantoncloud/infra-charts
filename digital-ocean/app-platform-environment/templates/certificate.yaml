@@ -1,0 +1,14 @@
+{% if values.httpsEnabled | bool %}
+---
+apiVersion: digital-ocean.project-planton.org/v1
+kind: DigitalOceanCertificate
+metadata:
+  name: "{{ values.env }}-app-cert"
+spec:
+  certificateName: "{{ values.env }}-app-cert"
+  type: letsEncrypt
+  letsEncrypt:
+    domains:
+      - "{{ values.app_domain_name }}"
+      - "*.{{ values.app_domain_name }}"
+  {% endif %}
