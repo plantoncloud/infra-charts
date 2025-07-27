@@ -22,6 +22,14 @@ spec:
     kubernetesClusterSelector:
       clusterKind: DigitalOceanKubernetesCluster
       clusterName: {{ values.cluster_name }}
+  container:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 100Mi
   {% endif %}
 
   {% if values.externalDnsEnabled | bool %}
@@ -48,6 +56,14 @@ spec:
     kubernetesClusterSelector:
       clusterKind: DigitalOceanKubernetesCluster
       clusterName: {{ values.cluster_name }}
+  container:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 100Mi
   {% endif %}
 
   {% if values.ingressNginxEnabled | bool %}
@@ -74,6 +90,14 @@ spec:
     kubernetesClusterSelector:
       clusterKind: DigitalOceanKubernetesCluster
       clusterName: {{ values.cluster_name }}
+  container:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 100Mi
   {% endif %}
 
   {% if values.kafkaOperatorEnabled | bool %}
@@ -87,6 +111,14 @@ spec:
     kubernetesClusterSelector:
       clusterKind: DigitalOceanKubernetesCluster
       clusterName: {{ values.cluster_name }}
+  container:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 100Mi
   {% endif %}
 
   {% if values.postgresOperatorEnabled | bool %}
@@ -100,6 +132,14 @@ spec:
     kubernetesClusterSelector:
       clusterKind: DigitalOceanKubernetesCluster
       clusterName: {{ values.cluster_name }}
+  container:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 100Mi
   {% endif %}
 
   {% if values.solrOperatorEnabled | bool %}
@@ -113,4 +153,12 @@ spec:
     kubernetesClusterSelector:
       clusterKind: DigitalOceanKubernetesCluster
       clusterName: {{ values.cluster_name }}
+  container:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 100Mi
   {% endif %}
