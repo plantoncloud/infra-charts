@@ -53,9 +53,3 @@ params:
 - name: max_instance_count
   description: Maximum instances when autoscaling
   value: "3"
-
-# ─── HTTPS toggle ─────────────────────────────────────────────────────────────
-- name: httpsEnabled
-  description: true → request Let’s Encrypt certificate for the custom domain
-  type: bool
-  value: true
