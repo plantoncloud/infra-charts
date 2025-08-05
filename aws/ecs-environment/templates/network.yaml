@@ -79,7 +79,7 @@ spec:
 apiVersion: aws.project-planton.org/v1
 kind: AwsAlb
 metadata:
-  name: "{{ values.env }}-ecs-services-alb"
+  name: "{{ values.env }}-alb"
 spec:
   subnets:
     - valueFrom:
