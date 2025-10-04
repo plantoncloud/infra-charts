@@ -8,7 +8,7 @@ spec:
     arn:
       valueFrom:
         kind: AwsAlb
-        name: "{{ values.env }}-ecs-services-alb"
+        name: "{{ values.env }}-alb"
         fieldPath: status.outputs.loadBalancerArn
     enabled: true
     hostname: "{{ values.service_name }}.{{ values.load_balancer_domain_name }}"

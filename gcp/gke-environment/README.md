@@ -115,7 +115,7 @@ Booleans are shown as **unquoted YAML booleans** (`true`/`false`) to avoid strin
 
 ## Important Notes
 
-* Ensure subnet CIDRs, NAT, and DNS settings comply with your organisation’s network standards.
+* Ensure subnet CIDRs, NAT, and DNS settings comply with your organization’s network standards.
 * When reusing an existing project (`create_project: false`), verify that required APIs (`compute`, `container`, `dns`,
   `iam`) are already enabled.
 * Disabling Workload Identity (`disable_workload_identity: true`) affects IAM design; plan service‑account mapping

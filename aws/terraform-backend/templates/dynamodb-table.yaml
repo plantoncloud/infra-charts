@@ -4,8 +4,13 @@ kind: AwsDynamodb
 metadata:
   name: "{{ values.table_name }}"
 spec:
-  billingMode: PROVISIONED
-  hashKey:
-    name: LockID
-    type: S
-  tableName: "{{ values.table_name }}"
+  billingMode: BILLING_MODE_PROVISIONED
+  provisionedThroughput:
+    readCapacityUnits: 5
+    writeCapacityUnits: 5
+  attributeDefinitions:
+    - name: LockID
+      type: ATTRIBUTE_TYPE_S
+  keySchema:
+    - attributeName: LockID
+      keyType: KEY_TYPE_HASH
