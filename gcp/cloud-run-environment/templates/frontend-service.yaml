@@ -4,12 +4,6 @@ kind: GcpCloudRun
 metadata:
   name: "{{ values.frontend_service_name }}"
   relationships:
-    {% if values.postgresEnabled | bool %}
-    - kind: GcpCloudSql
-      name: "{{ values.postgres_instance_name }}"
-      type: uses
-      group: services
-    {% endif %}
     {% if values.dockerRepoEnabled | bool %}
     - kind: GcpArtifactRegistryRepo
       name: "{{ values.docker_repo_name }}"
