@@ -1,0 +1,35 @@
+{% if values.backendServiceEnabled | bool %}
+---
+apiVersion: gcp.project-planton.org/v1
+kind: GcpCloudRun
+metadata:
+  name: "{{ values.backend_service_name }}"
+spec:
+  projectId: "{{ values.gcp_project_id }}"
+  region: "{{ values.gcp_region }}"
+
+  # ──── container runtime ────
+  container:
+    image:
+      repo: nginx
+      tag: latest
+    port: {{ values.backend_service_port }}
+    cpu: 1
+    memory: 512
+    replicas:
+      min: 0
+      max: 1
+    env:
+      variables:
+        SERVICE_NAME: "{{ values.backend_service_name }}"
+        ENV: "{{ env }}"
+
+  # ──── traffic / scaling ────
+  maxConcurrency: 80
+  allowUnauthenticated: true
+
+  # ──── optional custom domain ────
+  dns:
+    enabled: false
+{% endif %}
+

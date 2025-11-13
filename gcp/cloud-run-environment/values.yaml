@@ -1,0 +1,97 @@
+params:
+  # ─── GCP Configuration ─────────────────────────────────────────────────
+  - name: gcp_project_id
+    description: GCP Project ID
+    value: planton-cloud-testing
+
+  - name: gcp_region
+    description: GCP region for all resources
+    value: us-central1
+
+  # ─── Service Configuration ─────────────────────────────────────────────
+  - name: frontend_service_name
+    description: Name of the frontend Cloud Run service
+    value: frontend
+
+  - name: frontend_service_port
+    description: Port for the frontend service
+    value: "8080"
+
+  - name: backend_service_name
+    description: Name of the backend Cloud Run service
+    value: backend
+
+  - name: backend_service_port
+    description: Port for the backend service
+    value: "8080"
+
+  - name: backendServiceEnabled
+    description: "true → create backend Cloud Run service"
+    type: bool
+    value: true
+
+  # ─── Optional DNS Zone ─────────────────────────────────────────────────
+  - name: domain_name
+    description: Custom domain name for DNS zone
+    value: example.com
+
+  - name: dnsZoneEnabled
+    description: "true → create GCP DNS Zone"
+    type: bool
+    value: true
+
+  # ─── Optional Docker Repository ────────────────────────────────────────
+  - name: dockerRepoEnabled
+    description: "true → create Docker repository"
+    type: bool
+    value: true
+
+  - name: docker_repo_name
+    description: Name of the Docker repository
+    value: docker-repo
+
+  # ─── Optional PostgreSQL Database ──────────────────────────────────────
+  - name: postgresEnabled
+    description: "true → create PostgreSQL database instance"
+    type: bool
+    value: true
+
+  - name: postgres_instance_name
+    description: Name of the PostgreSQL instance
+    value: postgres
+
+  - name: postgres_tier
+    description: PostgreSQL machine tier
+    value: db-f1-micro
+
+  - name: postgres_storage_gb
+    description: Storage size in GB
+    value: "10"
+
+  - name: postgres_version
+    description: PostgreSQL version
+    value: POSTGRES_15
+
+  - name: postgres_root_password
+    description: Root password (rotate after deployment)
+    value: change-me-immediately
+
+  # ─── Optional Storage Bucket ───────────────────────────────────────────
+  - name: storageBucketEnabled
+    description: "true → create storage bucket"
+    type: bool
+    value: true
+
+  - name: storage_bucket_name
+    description: Name of the storage bucket
+    value: storage-bucket
+
+  # ─── Optional Service Account ──────────────────────────────────────────
+  - name: serviceAccountEnabled
+    description: "true → create Service Account with JSON key"
+    type: bool
+    value: true
+
+  - name: service_account_id
+    description: Service account ID
+    value: app-service-account

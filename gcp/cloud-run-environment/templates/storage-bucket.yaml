@@ -1,0 +1,11 @@
+{% if values.storageBucketEnabled | bool %}
+---
+apiVersion: gcp.project-planton.org/v1
+kind: GcpGcsBucket
+metadata:
+  name: "{{ values.storage_bucket_name }}"
+spec:
+  gcpProjectId: "{{ values.gcp_project_id }}"
+  gcpRegion: "{{ values.gcp_region }}"
+{% endif %}
+

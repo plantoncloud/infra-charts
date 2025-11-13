@@ -1,0 +1,19 @@
+{% if values.postgresEnabled | bool %}
+---
+apiVersion: gcp.project-planton.org/v1
+kind: GcpCloudSql
+metadata:
+  name: "{{ values.postgres_instance_name }}"
+spec:
+  projectId: "{{ values.gcp_project_id }}"
+  region: "{{ values.gcp_region }}"
+  databaseEngine: POSTGRESQL
+  databaseVersion: "{{ values.postgres_version }}"
+  tier: "{{ values.postgres_tier }}"
+  storageGb: {{ values.postgres_storage_gb }}
+  rootPassword: "{{ values.postgres_root_password }}"  # IMPORTANT: Rotate this password immediately after deployment
+  network:
+    authorizedNetworks:
+      - 0.0.0.0/0
+{% endif %}
+
