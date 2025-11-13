@@ -99,6 +99,49 @@ Booleans are shown as **unquoted YAML booleans** (`true`/`false`) to avoid strin
 
 ---
 
+## Resource Dependencies and Deployment Order
+
+This chart uses **synthetic relationships** to ensure resources are created in the correct order. The platform automatically builds a dependency graph (DAG) and orchestrates deployment accordingly.
+
+### Dependency Flow
+
+```
+Service Account (if enabled)
+  ↓
+Storage Bucket (if enabled, depends on Service Account)
+  ↓
+Backend Service (if enabled, depends on Storage Bucket, Service Account, Postgres, Docker Repo, DNS Zone)
+
+Postgres Database (if enabled)
+  ↓
+Frontend Service (depends on Postgres, Docker Repo, DNS Zone)
+```
+
+### How It Works
+
+- **Frontend Service** waits for:
+  - PostgreSQL database (if `postgresEnabled: true`)
+  - Docker repository (if `dockerRepoEnabled: true`)
+  - DNS zone (if `dnsZoneEnabled: true`)
+
+- **Backend Service** waits for:
+  - PostgreSQL database (if `postgresEnabled: true`)
+  - Docker repository (if `dockerRepoEnabled: true`)
+  - Storage bucket (if `storageBucketEnabled: true`)
+  - Service account (if `serviceAccountEnabled: true`)
+  - DNS zone (if `dnsZoneEnabled: true`)
+
+- **Storage Bucket** waits for:
+  - Service account (if `serviceAccountEnabled: true`)
+
+**Key Benefits:**
+- Resources deploy in parallel when no dependencies exist
+- Services don't deploy until infrastructure (database, storage, DNS) is ready
+- Conditional relationships mean disabled resources don't block deployment
+- All services are grouped together for visualization
+
+---
+
 ## Service Configuration Details
 
 Both the frontend and backend Cloud Run services are configured with:

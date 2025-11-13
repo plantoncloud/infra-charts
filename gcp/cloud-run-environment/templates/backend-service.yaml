@@ -4,6 +4,37 @@ apiVersion: gcp.project-planton.org/v1
 kind: GcpCloudRun
 metadata:
   name: "{{ values.backend_service_name }}"
+  relationships:
+    {% if values.postgresEnabled | bool %}
+    - kind: GcpCloudSql
+      name: "{{ values.postgres_instance_name }}"
+      type: uses
+      group: services
+    {% endif %}
+    {% if values.dockerRepoEnabled | bool %}
+    - kind: GcpArtifactRegistryRepo
+      name: "{{ values.docker_repo_name }}"
+      type: uses
+      group: services
+    {% endif %}
+    {% if values.storageBucketEnabled | bool %}
+    - kind: GcpGcsBucket
+      name: "{{ values.storage_bucket_name }}"
+      type: uses
+      group: services
+    {% endif %}
+    {% if values.serviceAccountEnabled | bool %}
+    - kind: GcpServiceAccount
+      name: "{{ values.service_account_id }}"
+      type: uses
+      group: services
+    {% endif %}
+    {% if values.dnsZoneEnabled | bool %}
+    - kind: GcpDnsZone
+      name: "{{ values.domain_name }}"
+      type: uses
+      group: services
+    {% endif %}
 spec:
   projectId: "{{ values.gcp_project_id }}"
   region: "{{ values.gcp_region }}"

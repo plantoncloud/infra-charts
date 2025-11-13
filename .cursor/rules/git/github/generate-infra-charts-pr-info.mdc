@@ -1,0 +1,254 @@
+---
+description: Generate a PR title and a Markdown PR description as exactly two copyable code blocks (ask-only). Conventional Commit prefix + chart-aware scope from file paths. No repo edits.
+globs:
+alwaysApply: false
+---
+
+# Rule: Pull Request Title and Description (ask-only)
+
+Purpose: When asked to write a PR title and PR description, respond with exactly two copyable code blocks — first the title, then the description — without making any repository changes.
+
+This rule is designed for ask mode only. Do not modify files, run commands, or propose edits. Output only the two fenced code blocks described below.
+
+Usage: In Ask mode, invoke explicitly as `@generate-infra-charts-pr-info`.
+
+## How to respond (strict)
+1) First block: PR Title
+   - Fenced code block with language: `text`
+   - Single line only
+   - Prefix using Conventional Commits: one of `feat`, `fix`, `refactor`, `docs`, `test`, `perf`, `ci`, `build`, `chore`, `revert`
+   - Scope is required and must be chart-aware, using a path-like token derived from changed files (examples below)
+   - Imperative mood, concise, ≤ 72 characters after the prefix
+   - No trailing period
+
+2) Second block: PR Description
+   - Fenced code block with language: `markdown`
+   - Use the following sections when applicable. Omit any that are not relevant.
+     - "Summary": 1–3 sentences describing what this PR does in plain language
+     - "Context": Why this change is needed (problem, bug, or goal)
+     - "Changes": Bullet list of key changes; group by chart/resource if helpful
+     - "Resources": List of cloud resources added/removed/modified (if applicable)
+     - "Deployment impact": How this affects existing deployments
+     - "Implementation notes": Important design decisions or trade-offs
+     - "Breaking changes": Clearly call out any breaking behavior and migration steps
+     - "Test plan": How this was verified (chart build, deployment tests, manual verification)
+     - "Risks": Known risks or rollback plan
+     - "Checklist": Markdown checkboxes for docs, tests, backward compatibility
+     - Optionally include issue links like `Closes #123` when known
+
+## Title format (exactly)
+
+```text
+<prefix>(<scope-path>): <concise, imperative title>
+```
+
+- Examples of valid scopes: `aws/ecs-environment`, `gcp/cloud-run-environment`, `azure/aks-environment`, `kubernetes/postgres`, `charts`, `docs`, `ci`, `repo`.
+- Use the actual chart directory name as scope for single-chart changes
+- Use broader scope for multi-chart changes
+
+## How to infer the title prefix
+- `feat`: Adds new chart, new resources to chart, or significant new capability
+- `fix`: Corrects a bug in chart templates or values
+- `refactor`: Template restructuring without changing deployment behavior
+- `docs`: Documentation-only changes (README, chart docs)
+- `test`: Tests only
+- `perf`: Performance improvements in template rendering or deployment
+- `ci`: CI pipeline/config changes
+- `build`: Build system or dependency changes
+- `chore`: Routine maintenance (formatting, small cleanups) not covered above
+- `revert`: Reverts a previous commit/PR
+
+Prefer `feat` vs `refactor` based on whether new resources or capabilities are introduced. Prefer `fix` when the primary intent is to resolve a defect.
+
+## Chart-aware scope heuristics (InfraCharts)
+Determine the `<scope-path>` from the changed files. Use the most impacted chart; if multiple, see multi-chart guidance below.
+
+- AWS Charts
+  - `aws/ecs-environment/**` → `aws/ecs-environment`
+  - `aws/eks-baseline/**` → `aws/eks-baseline`
+  - `aws/rds-postgres/**` → `aws/rds-postgres`
+  - Other `aws/<chart>/**` → `aws/<chart>`
+
+- GCP Charts
+  - `gcp/cloud-run-environment/**` → `gcp/cloud-run-environment`
+  - `gcp/gke-baseline/**` → `gcp/gke-baseline`
+  - `gcp/cloud-sql/**` → `gcp/cloud-sql`
+  - Other `gcp/<chart>/**` → `gcp/<chart>`
+
+- Azure Charts
+  - `azure/aks-environment/**` → `azure/aks-environment`
+  - Other `azure/<chart>/**` → `azure/<chart>`
+
+- Kubernetes Charts
+  - `kubernetes/<chart>/**` → `kubernetes/<chart>`
+
+- Repository-wide
+  - `_changelog/**` → `changelog`
+  - `.cursor/**` → `.cursor`
+  - Root `README.md` or `docs/**` → `docs`
+  - `.github/**` → `ci`
+  - Build and repo config → `repo`
+
+### Multi-chart changes
+- If changes span multiple charts within same provider, use provider:
+  - Both `aws/ecs-environment` and `aws/eks-baseline` → `aws`
+  - Multiple GCP charts → `gcp`
+- If changes span multiple providers, use `charts`
+- For cross-cutting patterns (≥3 unrelated charts), use `charts`
+
+## Inputs to use when generating
+- The full diff and edit history from this session
+- Changed files and their paths to infer scope using the rules above
+- Chart template changes, values schema updates
+- Resources added/removed from charts
+- Commit messages, branch name, or linked issues if available
+
+If context is insufficient to infer details, choose the best effort scope from filenames and touched areas. Do not ask questions; still produce both blocks.
+
+## Output blocks (exactly two, nothing else)
+
+```text
+<prefix>(<scope-path>): <concise, imperative title>
+```
+
+```markdown
+## Summary
+<1–3 sentences>
+
+## Context
+<why this change was needed>
+
+## Changes
+- <key change 1>
+- <key change 2>
+- <key change 3>
+
+## Resources
+- <resources added/removed/modified>
+
+## Deployment impact
+- <how this affects existing deployments>
+
+## Implementation notes
+- <notable decision or trade-off>
+
+## Breaking changes
+- <explicitly list or state "None">
+
+## Test plan
+- <how verified: chart build, deployment tests, etc.>
+
+## Risks
+- <risks and rollback>
+
+## Checklist
+- [ ] Chart README updated
+- [ ] values.yaml documented
+- [ ] Chart builds successfully
+- [ ] Backward compatible (or migration documented)
+
+<!-- Optionally: Closes #123 -->
+```
+
+## Examples
+
+### New Chart
+
+```text
+feat(gcp/cloud-run-environment): add complete environment chart with conditional resources
+```
+
+```markdown
+## Summary
+Complete overhaul of GCP Cloud Run Environment chart to support full-stack deployments with 7 configurable resources and intelligent dependency orchestration.
+
+## Context
+Customers needed a comprehensive chart to provision complete Cloud Run environments (frontend, backend, database, storage, registry) instead of creating resources individually. The original minimal chart only included a basic service and DNS zone.
+
+## Changes
+- Add 6 new resource templates (backend service, PostgreSQL, Docker repo, storage bucket, service account)
+- Implement conditional rendering with boolean flags (all default to true)
+- Add synthetic relationships for proper deployment ordering
+- Update values.yaml with 22 parameters
+- Comprehensive README with deployment flow diagrams
+
+## Resources
+- Frontend Cloud Run service (always created)
+- Backend Cloud Run service (conditional: backendServiceEnabled)
+- PostgreSQL database (conditional: postgresEnabled)
+- Docker repository (conditional: dockerRepoEnabled)
+- Storage bucket (conditional: storageBucketEnabled)
+- Service account (conditional: serviceAccountEnabled)
+- DNS zone (conditional: dnsZoneEnabled)
+
+## Deployment impact
+Existing users: New resources enabled by default. Set boolean flags to false to maintain previous minimal behavior.
+
+## Implementation notes
+- Used semantic relationship types: `uses` for consumption, `depends_on` for prerequisites
+- All relationships conditional based on enabled resources
+- User-friendly naming: "Docker repo" vs "Artifact Registry", "PostgreSQL" vs "Cloud SQL"
+
+## Breaking changes
+None - frontend service maintains backward compatibility
+
+## Test plan
+- Chart build verified with all resources enabled
+- Chart build verified with various flag combinations
+- Deployment tested for customer Odwen staging environment
+- DAG visualization confirms proper dependency ordering
+
+## Risks
+Low - all new resources are optional, users explicitly enable what they need
+
+## Checklist
+- [x] Chart README updated
+- [x] values.yaml documented
+- [x] Chart builds successfully
+- [x] Backward compatible
+```
+
+### Chart Enhancement
+
+```text
+feat(aws/ecs-environment): add conditional HTTPS support
+```
+
+```markdown
+## Summary
+Add boolean flag to optionally enable/disable HTTPS termination on ALB, allowing users to deploy HTTP-only environments for dev/testing.
+
+## Context
+Some environments don't require HTTPS (internal tools, dev environments), but the chart always created ACM certificates and configured SSL.
+
+## Changes
+- Add `httpsEnabled` boolean flag to values.yaml (default: true)
+- Wrap ACM certificate resource in conditional
+- Conditionally add SSL configuration to ALB spec
+- Update ECS service listener port (443 vs 80) based on flag
+
+## Resources
+- ACM Certificate (conditional: httpsEnabled)
+- ALB SSL configuration (conditional: httpsEnabled)
+
+## Deployment impact
+Existing deployments: No change (HTTPS enabled by default)
+New deployments: Can disable HTTPS for internal environments
+
+## Implementation notes
+Followed same pattern as other conditional resources in chart family
+
+## Breaking changes
+None
+
+## Test plan
+- Chart build verified with httpsEnabled=true
+- Chart build verified with httpsEnabled=false
+- Manual deployment test for both configurations
+
+## Checklist
+- [x] Chart README updated
+- [x] values.yaml documented
+- [x] Chart builds successfully
+- [x] Backward compatible
+```
