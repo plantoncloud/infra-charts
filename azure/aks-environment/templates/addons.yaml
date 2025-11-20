@@ -8,7 +8,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.elasticOperatorEnabled | bool %}
@@ -21,7 +21,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.externalDnsEnabled | bool %}
@@ -34,7 +34,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.externalSecretsEnabled | bool %}
@@ -47,7 +47,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.ingressNginxEnabled | bool %}
@@ -60,7 +60,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.istioEnabled | bool %}
@@ -73,7 +73,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.kafkaOperatorEnabled | bool %}
@@ -86,7 +86,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.postgresOperatorEnabled | bool %}
@@ -99,7 +99,7 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
 
   {% if values.solrOperatorEnabled | bool %}
@@ -112,5 +112,5 @@ spec:
   targetCluster:
     kubernetesClusterSelector:
       clusterKind: AzureAksCluster
-      clusterName: "{{ values.cluster_name }}"
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   {% endif %}
