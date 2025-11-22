@@ -2,7 +2,7 @@
 apiVersion: azure.project-planton.org/v1
 kind: AzureAksCluster
 metadata:
-  name: "{{ values.cluster_name }}"
+  name: "{{ values.env }}-{{ values.cluster_name }}"
 spec:
   region: "{{ values.region }}"
   vnetSubnetId:

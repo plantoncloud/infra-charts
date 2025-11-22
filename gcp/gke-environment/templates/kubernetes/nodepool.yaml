@@ -8,8 +8,8 @@ spec:
     value: "{{ values.project_id }}"
   clusterName:
     valueFrom:
-      kind: GcpGkeClusterCore
-      name: "{{ values.cluster_name }}"
+      kind: GcpGkeCluster
+      name: "{{ values.env }}-{{ values.cluster_name }}"
       fieldPath: metadata.name
   machineType: "{{ values.node_pool_machine_type }}"
   diskSizeGb: {{ values.node_pool_disk_size_gb }}

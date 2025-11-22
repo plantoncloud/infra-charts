@@ -1,0 +1,18 @@
+{% if values.externalDnsEnabled | bool %}
+---
+apiVersion: kubernetes.project-planton.org/v1
+kind: KubernetesExternalDns
+metadata:
+  name: {{ values.cluster_name }}-external-dns
+  relationships:
+    - kind: GcpGkeNodePool
+      name: "{{ values.node_pool_name }}"
+      type: runs_on
+      group: networking-addons
+spec:
+  targetCluster:
+    kubernetesClusterSelector:
+      clusterKind: GcpGkeCluster
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
+{% endif %}
+

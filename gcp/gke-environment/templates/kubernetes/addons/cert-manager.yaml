@@ -1,0 +1,18 @@
+{% if values.certManagerEnabled | bool %}
+---
+apiVersion: kubernetes.project-planton.org/v1
+kind: KubernetesCertManager
+metadata:
+  name: {{ values.cluster_name }}-cert-manager
+  relationships:
+    - kind: GcpGkeNodePool
+      name: "{{ values.node_pool_name }}"
+      type: runs_on
+      group: security-addons
+spec:
+  targetCluster:
+    kubernetesClusterSelector:
+      clusterKind: GcpGkeCluster
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
+{% endif %}
+

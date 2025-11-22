@@ -1,0 +1,26 @@
+{% if values.elasticOperatorEnabled | bool %}
+---
+apiVersion: kubernetes.project-planton.org/v1
+kind: KubernetesElasticOperator
+metadata:
+  name: {{ values.cluster_name }}-elastic-operator
+  relationships:
+    - kind: CivoKubernetesCluster
+      name: "{{ values.env }}-{{ values.cluster_name }}"
+      type: runs_on
+      group: observability-operators
+spec:
+  targetCluster:
+    kubernetesClusterSelector:
+      clusterKind: CivoKubernetesCluster
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
+  container:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+{% endif %}
+

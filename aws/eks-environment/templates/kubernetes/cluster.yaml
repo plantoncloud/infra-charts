@@ -2,7 +2,7 @@
 apiVersion: aws.project-planton.org/v1
 kind: AwsEksCluster
 metadata:
-  name: "{{ values.cluster_name }}"
+  name: "{{ values.env }}-{{ values.cluster_name }}"
 spec:
   subnetIds:
     - valueFrom:

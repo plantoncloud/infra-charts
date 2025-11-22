@@ -1,0 +1,18 @@
+{% if values.postgresOperatorEnabled | bool %}
+---
+apiVersion: kubernetes.project-planton.org/v1
+kind: KubernetesZalandoPostgresOperator
+metadata:
+  name: {{ values.cluster_name }}-postgres-operator
+  relationships:
+    - kind: AzureAksNodePool
+      name: "{{ values.node_pool_name }}"
+      type: runs_on
+      group: database-operators
+spec:
+  targetCluster:
+    kubernetesClusterSelector:
+      clusterKind: AzureAksCluster
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
+{% endif %}
+

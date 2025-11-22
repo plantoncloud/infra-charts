@@ -1,0 +1,18 @@
+{% if values.kafkaOperatorEnabled | bool %}
+---
+apiVersion: kubernetes.project-planton.org/v1
+kind: KubernetesStrimziKafkaOperator
+metadata:
+  name: {{ values.cluster_name }}-kafka-operator
+  relationships:
+    - kind: AzureAksNodePool
+      name: "{{ values.node_pool_name }}"
+      type: runs_on
+      group: database-operators
+spec:
+  targetCluster:
+    kubernetesClusterSelector:
+      clusterKind: AzureAksCluster
+      clusterName: "{{ values.env }}-{{ values.cluster_name }}"
+{% endif %}
+

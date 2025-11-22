@@ -1,0 +1,9 @@
+---
+apiVersion: civo.project-planton.org/v1
+kind: CivoVpc
+metadata:
+  name: "{{ values.cluster_name }}-vpc"
+spec:
+  networkName: "{{ values.env }}-{{ values.cluster_name }}-network"
+  region: {{ values.region }}
+

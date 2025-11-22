@@ -1,8 +1,8 @@
 ---
 apiVersion: gcp.project-planton.org/v1
-kind: GcpGkeClusterCore
+kind: GcpGkeCluster
 metadata:
-  name: "{{ values.cluster_name }}"
+  name: "{{ values.env }}-{{ values.cluster_name }}"
 spec:
   projectId:
   {% if values.create_project | bool %}

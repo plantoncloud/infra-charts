@@ -2,7 +2,7 @@
 apiVersion: digital-ocean.project-planton.org/v1
 kind: DigitalOceanKubernetesCluster
 metadata:
-  name: "{{ values.cluster_name }}"
+  name: "{{ values.env }}-{{ values.cluster_name }}"
 spec:
   clusterName: "{{ values.env }}-{{ values.cluster_name }}"
   region: "{{ values.region }}"

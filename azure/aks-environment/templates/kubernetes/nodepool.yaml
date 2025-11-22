@@ -7,7 +7,7 @@ spec:
   clusterName:
     valueFrom:
       kind: AzureAksCluster
-      name: "{{ values.cluster_name }}"
+      name: "{{ values.env }}-{{ values.cluster_name }}"
       fieldPath: metadata.name
   vmSize: "{{ values.node_vm_size }}"
   initialNodeCount: {{ values.node_initial_count }}
