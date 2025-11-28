@@ -4,11 +4,11 @@ apiVersion: kubernetes.project-planton.org/v1
 kind: KubernetesIngressNginx
 metadata:
   name: {{ values.cluster_name }}-ingress-nginx
+  group: networking-addons
   relationships:
     - kind: AwsEksNodeGroup
       name: "{{ values.node_group_name }}"
       type: runs_on
-      group: networking-addons
 spec:
   targetCluster:
     kubernetesClusterSelector:

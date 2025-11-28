@@ -4,11 +4,11 @@ apiVersion: kubernetes.project-planton.org/v1
 kind: KubernetesStrimziKafkaOperator
 metadata:
   name: {{ values.cluster_name }}-kafka-operator
+  group: database-operators
   relationships:
     - kind: AwsEksNodeGroup
       name: "{{ values.node_group_name }}"
       type: runs_on
-      group: database-operators
 spec:
   targetCluster:
     kubernetesClusterSelector:

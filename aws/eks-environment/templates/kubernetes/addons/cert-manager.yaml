@@ -4,11 +4,11 @@ apiVersion: kubernetes.project-planton.org/v1
 kind: KubernetesCertManager
 metadata:
   name: {{ values.cluster_name }}-cert-manager
+  group: security-addons
   relationships:
     - kind: AwsEksNodeGroup
       name: "{{ values.node_group_name }}"
       type: runs_on
-      group: security-addons
 spec:
   targetCluster:
     kubernetesClusterSelector:

@@ -4,15 +4,16 @@ apiVersion: gcp.project-planton.org/v1
 kind: GcpGcsBucket
 metadata:
   name: "{{ values.storage_bucket_name }}"
+  group: storage
   {% if values.serviceAccountEnabled | bool %}
   relationships:
     - kind: GcpServiceAccount
       name: "{{ values.service_account_id }}"
       type: depends_on
-      group: storage
   {% endif %}
 spec:
   gcpProjectId: "{{ values.gcp_project_id }}"
-  gcpRegion: "{{ values.gcp_region }}"
+  location: "{{ values.gcp_region }}"
+  bucketName: "{{ values.storage_bucket_name }}"
 {% endif %}
 

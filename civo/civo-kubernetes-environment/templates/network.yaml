@@ -7,3 +7,28 @@ spec:
   networkName: "{{ values.env }}-{{ values.cluster_name }}-network"
   region: {{ values.region }}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

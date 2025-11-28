@@ -4,11 +4,11 @@ apiVersion: kubernetes.project-planton.org/v1
 kind: KubernetesIstio
 metadata:
   name: {{ values.cluster_name }}-istio-ingress
+  group: networking-addons
   relationships:
     - kind: DigitalOceanKubernetesCluster
       name: "{{ values.env }}-{{ values.cluster_name }}"
       type: runs_on
-      group: networking-addons
 spec:
   targetCluster:
     kubernetesClusterSelector:

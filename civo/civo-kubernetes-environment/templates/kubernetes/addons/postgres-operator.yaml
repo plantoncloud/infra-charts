@@ -4,11 +4,11 @@ apiVersion: kubernetes.project-planton.org/v1
 kind: KubernetesZalandoPostgresOperator
 metadata:
   name: {{ values.cluster_name }}-postgres-operator
+  group: database-operators
   relationships:
     - kind: CivoKubernetesCluster
       name: "{{ values.env }}-{{ values.cluster_name }}"
       type: runs_on
-      group: database-operators
 spec:
   targetCluster:
     kubernetesClusterSelector:

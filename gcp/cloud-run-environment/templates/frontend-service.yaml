@@ -3,18 +3,17 @@ apiVersion: gcp.project-planton.org/v1
 kind: GcpCloudRun
 metadata:
   name: "{{ values.frontend_service_name }}"
+  group: services
   relationships:
     {% if values.dockerRepoEnabled | bool %}
     - kind: GcpArtifactRegistryRepo
       name: "{{ values.docker_repo_name }}"
       type: uses
-      group: services
     {% endif %}
     {% if values.dnsZoneEnabled | bool %}
     - kind: GcpDnsZone
       name: "{{ values.domain_name }}"
       type: uses
-      group: services
     {% endif %}
 spec:
   projectId: "{{ values.gcp_project_id }}"
